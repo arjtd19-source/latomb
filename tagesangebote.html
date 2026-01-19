@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alle Tagesangebote | LA TOMBOLA 90</title>
+    <style>
+        :root {
+            --logo-red: #631a1e;       
+            --bg-nougat: #bdaf95;      
+            --bg-vanilla-creme: #d6cbb0; 
+            --text-dark: #1a1a1a;    
+            --white: #ffffff;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg-nougat);
+        }
+        header {
+            background-color: var(--bg-vanilla-creme);
+            border-bottom: 4px solid var(--logo-red);
+            padding: 15px 0; text-align: center;
+        }
+        .logo-container h1 { color: var(--logo-red); margin: 0; font-size: 2rem; }
+        nav { margin-top: 10px; display: flex; justify-content: center; gap: 15px; }
+        nav a { color: var(--logo-red); text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .menu-item { border-left: 4px solid var(--logo-red); padding-left: 15px; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 0 8px 8px 0; }
+        @media (max-width: 850px) { .menu-grid { grid-template-columns: 1fr; } }
+        footer { text-align: center; padding: 20px; color: var(--logo-red); font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container"><h1>LA TOMBOLA</h1></div>
+        <nav>
+            <a href="index.html">ZURÜCK ZUR STARTSEITE</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center; color: var(--logo-red); text-transform: uppercase;">Unsere aktuellen Tagesangebote</h2>
+        <div id="full-list-container" class="menu-grid">
+            <p style="text-align: center; grid-column: 1/-1;">Angebote werden geladen...</p>
+        </div>
+    </div>
+
+    <footer>© 2026 Pizzeria LA TOMBOLA 90</footer>
+
+    <script>
+        async function loadAll() {
+            const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4iarO4GDUatu19QSFTPOOty6Xkl9QjWDP-MINEMEXH4ZxmZZFTujUxOSxPOsNk2Fd1iKtfmRsF1F-/pub?gid=0&single=true&output=csv';
+            const container = document.getElementById('full-list-container');
+            
+            try {
+                const response = await fetch(url);
+                const csvText = await response.text();
+                const lines = csvText.split(/\r?\n/).filter(l => l.trim() !== "");
+                
+                container.innerHTML = "";
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].match(/(".*?"|[^",;]+)(?=\s*[,;]|\s*$)/g);
+                    if (cols && cols.length >= 2) {
+                        const name = cols[0].replace(/"/g, "").trim();
+                        const preis = cols[1].replace(/"/g, "").trim();
+                        const beschr = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
+                        
+                        container.innerHTML += `
+                            <div class="menu-item">
+                                <h3>${name} <span style="float:right">${preis}</span></h3>
+                                <p>${beschr}</p>
+                            </div>`;
+                    }
+                }
+            } catch (e) { container.innerHTML = "<p>Laden fehlgeschlagen.</p>"; }
+        }
+        loadAll();
+    </script>
+</body>
+</html>

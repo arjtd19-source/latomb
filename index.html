@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria LA TOMBOLA 90 | Essen Werden</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --logo-red: #631a1e;       
+            --bg-nougat: #bdaf95;      
+            --bg-vanilla-creme: #d6cbb0; 
+            --text-dark: #1a1a1a;    
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg-nougat);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--bg-vanilla-creme);
+            border-bottom: 4px solid var(--logo-red);
+            padding: 15px 0; 
+            text-align: center;
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        }
+
+        .logo-container h1 {
+            color: var(--logo-red); margin: 0;
+            font-size: 3.5rem; text-transform: uppercase;
+            letter-spacing: 4px; font-weight: 900; line-height: 1;
+        }
+
+        .circle-90 {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 70px; height: 70px; border: 4px solid var(--logo-red);
+            border-radius: 50%; margin-top: 5px; color: var(--logo-red);
+            font-size: 2.2rem; font-weight: 900;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+        }
+
+        .circle-90:active { transform: scale(0.9); }
+
+        nav { 
+            margin-top: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 15px; 
+            padding: 0 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--logo-red); text-decoration: none;
+            font-weight: 900; text-transform: uppercase; font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        /* Der neue Tombola Button Style */
+        .tombola-link {
+            border: 2px solid var(--logo-red);
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        .tombola-link:hover {
+            background: var(--logo-red);
+            color: var(--white) !important;
+        }
+        
+        .btn-highlight {
+            background-color: var(--logo-red); color: var(--white) !important;
+            padding: 10px 25px !important; border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px; 
+        }
+
+        /* --- TOMBOLA SPIEL MODAL --- */
+        #game-overlay {
+            display: none; /* Versteckt */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 3000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .game-window {
+            background: var(--white);
+            border: 4px solid var(--logo-red);
+            padding: 30px; border-radius: 15px;
+            text-align: center; width: 90%; max-width: 450px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            position: relative;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .close-game {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 24px; color: var(--logo-red); cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .game-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; }
+        .game-window input[type="number"] {
+            padding: 10px; font-size: 22px; width: 80px; text-align: center;
+            border: 2px solid var(--bg-nougat); border-radius: 8px; margin: 15px 0;
+            font-family: 'Georgia', serif; color: var(--logo-red); font-weight: bold;
+        }
+        .game-btn {
+            background-color: var(--logo-red); color: white; border: none;
+            padding: 12px 30px; font-size: 18px; cursor: pointer;
+            border-radius: 50px; font-family: 'Georgia', serif; text-transform: uppercase;
+            width: 100%; margin-top: 10px;
+        }
+        .game-btn:disabled { background-color: #999; cursor: not-allowed; }
+        
+        .win-code-box {
+            background: #e8f5e9; border: 2px dashed #2e7d32;
+            padding: 10px; margin-top: 15px; color: #1b5e20; font-weight: bold;
+        }
+        .game-result { margin-top: 15px; min-height: 40px; font-weight: bold; }
+        .game-info { font-size: 0.8rem; color: #777; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px;}
+
+        /* --- ALTES "JOKE" OVERLAY (BEHALTEN) --- */
+        #win-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .win-content {
+            background: var(--bg-vanilla-creme);
+            border: 10px solid var(--logo-red);
+            padding: 40px; border-radius: 20px;
+            text-align: center; max-width: 80%;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+        .win-content h2 { color: var(--logo-red); font-size: 2.5rem; margin: 0; }
+        .win-content p { font-size: 1.5rem; font-weight: bold; margin-top: 10px; }
+
+        /* --- HERO & REST --- */
+        .hero-container {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center;
+            padding: 60px 20px; display: flex; justify-content: center;
+            border-bottom: 8px solid var(--logo-red); color: var(--white);
+        }
+
+        .hero-content {
+            max-width: 1100px; width: 100%; display: flex;
+            justify-content: space-between; align-items: center; gap: 40px;
+        }
+
+        .hero-text h2 { font-size: 3rem; margin: 0; }
+
+        .slider-box {
+            width: 350px; height: 250px; position: relative;
+            overflow: hidden; border: 4px solid var(--bg-vanilla-creme); border-radius: 12px;
+        }
+
+        .slider-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; opacity: 0; transition: opacity 1s;
+        }
+        .slider-box img.active { opacity: 1; }
+
+        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+
+        .section-title {
+            text-align: center; color: var(--logo-red);
+            border-bottom: 3px solid var(--logo-red);
+            padding-bottom: 10px; text-transform: uppercase; letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .menu-item { border-left: 4px solid var(--logo-red); padding-left: 15px; }
+
+        .info-box {
+            background-color: var(--logo-red); color: var(--white);
+            padding: 30px; border-radius: 8px; display: flex;
+            justify-content: space-around; flex-wrap: wrap; gap: 20px; margin-top: 40px;
+        }
+        .info-box a { color: white; text-decoration: none; }
+
+        .brand-logos { display: flex; gap: 25px; margin-top: 10px; justify-content: center; align-items: center; }
+        .brand-logos a { font-size: 2.5rem; transition: transform 0.3s; }
+        .brand-logos a:hover { transform: scale(1.1); }
+
+        .color-orig .fa-facebook-f { color: #1877F2; } 
+        .color-orig .fa-instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .color-site .fa-facebook-f, .color-site .fa-instagram { color: var(--white); background: none; -webkit-text-fill-color: initial; }
+
+        #impressum { display: none; margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--logo-red); }
+        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 25px; color: var(--logo-red); font-weight: bold; }
+        footer a { color: inherit; text-decoration: none; cursor: pointer; }
+
+        @media (max-width: 850px) {
+            .logo-container h1 { font-size: 2.2rem; }
+            .hero-content { flex-direction: column; text-align: center; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .slider-box { display: none; }
+            .info-box { text-align: center; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <div id="win-overlay" onclick="closeWin()">
+        <div class="win-content">
+            <h2>🎉 GEWONNEN! 🎉</h2>
+            <p>2 JAHRE PIZZA FREI!</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">(Nur ein Spaß!)</p>
+        </div>
+    </div>
+
+    <div id="game-overlay">
+        <div class="game-window">
+            <span class="close-game" onclick="closeGame()">&times;</span>
+            <h2>🍕 Tombola 🍕</h2>
+            <p>Wähle eine Zahl zwischen 0 und 90.<br>Wenn wir dieselbe ziehen, gewinnst du!</p>
+            
+            <input type="number" id="gameInput" min="0" max="90" placeholder="?">
+            <button id="gameBtn" class="game-btn" onclick="runTombolaGame()">Zahl ziehen</button>
+            
+            <div id="gameResult" class="game-result"></div>
+            <div class="game-info" id="gameStatus">Täglich 1 Versuch möglich.</div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <h1>LA TOMBOLA</h1>
+            <div id="number-circle" class="circle-90" onclick="showWin()">90</div>
+        </div>
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#" onclick="openGame()" class="tombola-link"><i class="fas fa-dice"></i> TOMBOLA</a>
+                <a href="tagesangebote.html">Tagesangebote</a>
+                <a href="speisekarte.html">Speisekarte</a>
+                <a href="galerie.html">Galerie</a>
+                <a href="#kontakt">Kontakt</a>
+            </div>
+            <a href="tel:020140870" class="btn-highlight"><i class="fas fa-phone"></i> BESTELLEN</a>
+        </nav>
+    </header>
+
+    <section class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Tradition & Leidenschaft <br> seit 1990</h2>
+            </div>
+            <div class="slider-box">
+                <img src="logo_bild1.jpg" class="active">
+                <img src="logo_bild2.jpg">
+                <img src="logo_bild3.jpg">
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="tagesangebote-preview">
+            <h2 class="section-title">Tagesangebote</h2>
+            <div id="tagesangebote-container" class="menu-grid">
+                <p style="grid-column: 1/-1; text-align:center;">Angebote werden geladen...</p>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="tagesangebote.html" style="background: var(--logo-red); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Alle Angebote anzeigen</a>
+            </div>
+        </section>
+
+        <section id="kontakt" style="margin-top: 80px;">
+            <div class="info-box">
+                <div class="info-column">
+                    <h3>Kontakt</h3>
+                    <p>Brückstraße 49, 45239 Essen<br>Tel: <a href="tel:020140870" style="border-bottom: 1px dotted white;">0201 40870</a></p>
+                </div>
+                <div class="info-column">
+                    <h3>Öffnungszeiten</h3>
+                    <p>Mo - So: 11.30 - 22.00 Uhr<br>Dienstag Ruhetag</p>
+                </div>
+                <div class="info-column" style="text-align: center;">
+                    <h3>Social Media</h3>
+                    <div class="brand-logos color-orig">
+                        <a href="https://www.facebook.com/p/Pizzeria-La-Tombola-100054366672322/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/pizzeria_la_tombola_90/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impressum">
+            <h2 class="section-title">Impressum</h2>
+            <div style="text-align: center; background: rgba(255,255,255,0.5); padding: 20px; border-radius: 8px;">
+                <p><strong>Pizzeria LA TOMBOLA 90</strong><br>Brückstraße 49, 45239 Essen</p>
+                <p>Inhaber: [Name einfügen]<br>Tel: 0201 40870<br>E-Mail: info@latombola90.de</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        © 2026 Pizzeria LA TOMBOLA 90 | 
+        <a onclick="showImpressum()" href="#impressum">Impressum</a>
+    </footer>
+
+    <script>
+        /* --- ALTES SKRIPT (Für die 90 Animation & Angebote) --- */
+        function showWin() {
+            const overlay = document.getElementById('win-overlay');
+            overlay.style.display = 'flex';
+            setTimeout(() => { closeWin(); }, 3000);
+        }
+
+        function closeWin() {
+            document.getElementById('win-overlay').style.display = 'none';
+        }
+
+        async function fetchSheetData() {
+            const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4iarO4GDUatu19QSFTPOOty6Xkl9QjWDP-MINEMEXH4ZxmZZFTujUxOSxPOsNk2Fd1iKtfmRsF1F-/pub?gid=0&single=true&output=csv';
+            const container = document.getElementById('tagesangebote-container');
+            try {
+                const response = await fetch(url);
+                const csvText = await response.text();
+                const lines = csvText.split(/\r?\n/).filter(l => l.trim() !== "");
+                container.innerHTML = "";
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].match(/(".*?"|[^",;]+)(?=\s*[,;]|\s*$)/g);
+                    if (cols && cols.length >= 2) {
+                        const name = cols[0].replace(/"/g, "").trim();
+                        const preis = cols[1].replace(/"/g, "").trim();
+                        const beschr = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
+                        container.innerHTML += `<div class="menu-item"><h3>${name} <span style="float:right">${preis}</span></h3><p>${beschr}</p></div>`;
+                    }
+                }
+            } catch (e) { container.innerHTML = "<p style='text-align:center;'>Angebote werden geladen...</p>"; }
+        }
+        fetchSheetData();
+
+        function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
+
+        const circle = document.getElementById('number-circle');
+        function tombola() {
+            const inter = setInterval(() => { circle.innerText = Math.floor(Math.random()*91); }, 70);
+            setTimeout(() => { clearInterval(inter); circle.innerText = "90"; setTimeout(tombola, 5000); }, 5000);
+        }
+        tombola();
+
+        let cur = 0;
+        const imgs = document.querySelectorAll('.slider-box img');
+        if(imgs.length > 0) {
+            setInterval(() => {
+                imgs[cur].classList.remove('active');
+                cur = (cur + 1) % imgs.length;
+                imgs[cur].classList.add('active');
+            }, 3500);
+        }
+
+        /* --- NEUES SKRIPT (Für das echte Tombola Spiel) --- */
+        function openGame() {
+            document.getElementById('game-overlay').style.display = 'flex';
+            checkDailyStatus();
+        }
+
+        function closeGame() {
+            document.getElementById('game-overlay').style.display = 'none';
+        }
+
+        function checkDailyStatus() {
+            const lastPlayed = localStorage.getItem('pizzaLastPlayed');
+            const today = new Date().toDateString();
+            const btn = document.getElementById('gameBtn');
+            const input = document.getElementById('gameInput');
+            const status = document.getElementById('gameStatus');
+
+            if (lastPlayed === today) {
+                btn.disabled = true;
+                btn.innerHTML = "Morgen wieder!";
+                input.disabled = true;
+                status.innerText = "Du hast dein Glück heute schon versucht! 🍀";
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = "Zahl ziehen";
+                input.disabled = false;
+                status.innerText = "Viel Glück!";
+                document.getElementById('gameResult').innerHTML = "";
+            }
+        }
+
+        function runTombolaGame() {
+            const input = document.getElementById('gameInput').value;
+            const resultDiv = document.getElementById('gameResult');
+            const btn = document.getElementById('gameBtn');
+
+            if (input === "" || input < 0 || input > 90) {
+                resultDiv.innerHTML = "<span style='color:red'>Bitte Zahl 0-90 wählen!</span>";
+                return;
+            }
+
+            btn.disabled = true;
+            resultDiv.innerHTML = "Die Trommel dreht sich... 🎲";
+
+            setTimeout(() => {
+                // Hier kannst du zum Testen gewinnen: const winningNumber = parseInt(input);
+                const winningNumber = Math.floor(Math.random() * 91);
+                
+                if (parseInt(input) === winningNumber) {
+                    // GEWONNEN
+                    const winCode = generateWinCode();
+                    resultDiv.innerHTML = `
+                        <div class="win-code-box">
+                            🎉 TREFFER! Code: ${winCode}
+                        </div>`;
+                } else {
+                    // VERLOREN
+                    resultDiv.innerHTML = `<span style="color:red">Schade! Gezogen wurde: ${winningNumber}.</span>`;
+                }
+
+                // Tagessperre setzen
+                localStorage.setItem('pizzaLastPlayed', new Date().toDateString());
+                document.getElementById('gameStatus').innerText = "Komm morgen wieder vorbei!";
+                
+            }, 1500);
+        }
+
+        function generateWinCode() {
+            const now = new Date();
+            const datePart = String(now.getDate()).padStart(2, '0') + String(now.getMonth()+1).padStart(2, '0');
+            const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+            return `PIZZA-${datePart}-${randomPart}`;
+        }
+    </script>
+</body>
+</html>

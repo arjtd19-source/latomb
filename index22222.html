@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria LA TOMBOLA 90 | Essen Werden</title>
+    <style>
+        :root {
+            --logo-red: #631a1e;       
+            --logo-red-light: #7a252a; 
+            --bg-nougat: #bdaf95;      
+            --bg-vanilla-creme: #d6cbb0; 
+            --text-dark: #1a1a1a;    
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-nougat);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        header {
+            background-color: var(--bg-vanilla-creme);
+            border-bottom: 4px solid var(--logo-red);
+            padding: 25px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        }
+
+        .logo-container h1 {
+            color: var(--logo-red);
+            margin: 0;
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-weight: 900;
+        }
+
+        .circle-90 {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--logo-red);
+            border-radius: 50%;
+            margin-top: 10px;
+            color: var(--logo-red);
+            font-size: 1.8rem;
+            font-weight: 900;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .circle-90:hover {
+            background-color: var(--logo-red);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        nav { 
+            margin-top: 25px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 0 10px;
+        }
+
+        nav a {
+            color: var(--logo-red);
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+            padding: 5px 0;
+        }
+        
+        nav a:hover:not(.btn-highlight) { border-bottom: 2px solid var(--logo-red); }
+
+        .btn-highlight {
+            background-color: var(--logo-red);
+            color: var(--white) !important;
+            padding: 10px 22px !important;
+            border-radius: 5px;
+            font-size: 0.95rem !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .hero-container {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 8px solid var(--logo-red);
+            color: var(--white);
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-text h2 { font-size: 3rem; margin: 0; line-height: 1.1; }
+        .hero-text p { font-size: 1.2rem; margin-top: 15px; }
+
+        .slider-box {
+            width: 350px;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--bg-vanilla-creme);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .slider-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slider-box img.active { opacity: 1; }
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 25px;
+        }
+
+        section { scroll-margin-top: 180px; }
+
+        .section-title {
+            text-align: center;
+            color: var(--logo-red);
+            border-bottom: 3px solid var(--logo-red);
+            padding-bottom: 15px;
+            margin-bottom: 45px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .menu-item { border-left: 5px solid var(--logo-red); padding-left: 20px; }
+        .menu-item h3 { color: var(--logo-red); display: flex; justify-content: space-between; margin-top: 0; }
+
+        .info-box {
+            background-color: var(--logo-red);
+            color: var(--white);
+            padding: 40px;
+            border-radius: 4px;
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .info-column a { color: white; text-decoration: none; border-bottom: 1px dotted white; }
+
+        .map-container {
+            margin-top: 40px;
+            border: 4px solid var(--logo-red);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            height: 400px;
+        }
+
+        footer {
+            background-color: var(--bg-vanilla-creme);
+            text-align: center;
+            padding: 30px;
+            color: var(--logo-red);
+            font-weight: bold;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 850px) {
+            .hero-content { flex-direction: column; text-align: center; }
+            .slider-box { width: 100%; max-width: 400px; height: 220px; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .hero-text h2 { font-size: 2.2rem; }
+            .logo-container h1 { font-size: 1.8rem; letter-spacing: 3px; }
+            .btn-highlight { width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="top"></div>
+
+    <header>
+        <div class="logo-container">
+            <h1>LA TOMBOLA</h1>
+            <div id="number-circle" class="circle-90">90</div>
+        </div>
+        <nav>
+            <a href="#top">Home</a>
+            <a href="#tagesangebote">Tagesangebote</a>
+            <a href="speisekarte.html">Speisekarte</a>
+            <a href="tel:020140870" class="btn-highlight">Bestellen</a>
+            <a href="galerie.html">Galerie</a>
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+    </header>
+
+    <section class="hero-container" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Herzlich willkommen <br> im Herzen von Werden</h2>
+                <p>Italienische Tradition & Leidenschaft seit 1950</p>
+            </div>
+            
+            <div class="slider-box">
+                <img src="logo_bild1.jpg" class="active">
+                <img src="logo_bild2.jpg">
+                <img src="logo_bild3.jpg">
+                <img src="logo_bild4.jpeg">
+                <img src="logo_bild5.jpg">
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="tagesangebote">
+            <h2 class="section-title">Unsere Tagesangebote</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h3><span>Pizza Natale</span> <span class="price">15,00 €</span></h3>
+                    <p>Mozzarella, Äpfel, Speck, Feta, karamellisierte Zwiebeln.</p>
+                </div>
+                <div class="menu-item">
+                    <h3><span>Dessert Pizza</span> <span class="price">5,00 €</span></h3>
+                    <p>Nutella, Mandeln, Puderzucker.</p>
+                </div>
+                <div class="menu-item">
+                    <h3><span>Bombardino</span> <span class="price">4,00 €</span></h3>
+                    <p>Heißgetränk mit Eierlikör, Rum und Sahne.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontakt">
+            <div class="info-box">
+                <div class="info-column">
+                    <h3>Kontakt</h3>
+                    <p>
+                        <a href="https://maps.apple.com/?address=Brückstraße%2049,45239,Essen">
+                            Brückstraße 49<br>45239 Essen (Werden)
+                        </a>
+                    </p>
+                    <p><strong>Tel: <a href="tel:020140870">0201 40870</a></strong></p>
+                </div>
+                <div class="info-column">
+                    <h3>Öffnungszeiten</h3>
+                    <p>Mo - So: 11.30 - 22 Uhr<br><em>Dienstags Ruhetag</em></p>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0" 
+                    loading="lazy" 
+                    allowfullscreen 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2488.423789547511!2d7.003550877014022!3d51.39160531953259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b8eec80f58694d%3A0x6b4618e8071e6f47!2zQnLDvGNrc3RyYcOfZSA0OSwgNDUyMzkgRXNzZW4!5e0!3m2!1sde!2sde!4v1715694800000!5m2!1sde!2sde">
+                </iframe>
+            </div>
+        </section>
+    </div>
+
+    <footer>© 2026 Pizzeria LA TOMBOLA 90</footer>
+
+    <script>
+        // --- Zahleneffekt Script ---
+        const circle = document.getElementById('number-circle');
+        let intervalId = null;
+
+        circle.addEventListener('mouseenter', () => {
+            intervalId = setInterval(() => {
+                const randomNum = Math.floor(Math.random() * 90) + 1;
+                circle.innerText = randomNum;
+            }, 60);
+        });
+
+        circle.addEventListener('mouseleave', () => {
+            clearInterval(intervalId);
+            circle.innerText = "90";
+        });
+
+        // --- Bilderslider Script ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-box img');
+        function showNextSlide() {
+            if(slides.length === 0) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        if(slides.length > 0) {
+            setInterval(showNextSlide, 3500);
+        }
+    </script>
+</body>
+</html>

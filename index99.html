@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria LA TOMBOLA 90 | Essen Werden</title>
+    <style>
+        :root {
+            --logo-red: #631a1e;       
+            --bg-nougat: #bdaf95;      
+            --bg-vanilla-creme: #d6cbb0; 
+            --text-dark: #1a1a1a;    
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-nougat);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--bg-vanilla-creme);
+            border-bottom: 4px solid var(--logo-red);
+            padding: 15px 0; 
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        }
+
+        .logo-container h1 {
+            color: var(--logo-red);
+            margin: 0;
+            font-size: 3.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .circle-90 {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            border: 4px solid var(--logo-red);
+            border-radius: 50%;
+            margin-top: 5px;
+            color: var(--logo-red);
+            font-size: 2.2rem;
+            font-weight: 900;
+            user-select: none;
+        }
+
+        nav { 
+            margin-top: 15px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 0 10px;
+        }
+
+        nav a {
+            color: var(--logo-red);
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 5px 0;
+            transition: 0.3s;
+        }
+        
+        .btn-highlight {
+            background-color: var(--logo-red);
+            color: var(--white) !important;
+            padding: 10px 22px !important;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* --- HERO & SLIDER --- */
+        .hero-container {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 8px solid var(--logo-red);
+            color: var(--white);
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-text h2 { font-size: 3rem; margin: 0; line-height: 1.1; }
+
+        .slider-box {
+            width: 350px;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--bg-vanilla-creme);
+            border-radius: 12px;
+        }
+
+        .slider-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .slider-box img.active { opacity: 1; }
+
+        /* --- CONTENT --- */
+        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+
+        .section-title {
+            text-align: center;
+            color: var(--logo-red);
+            border-bottom: 3px solid var(--logo-red);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .menu-item { border-left: 4px solid var(--logo-red); padding-left: 15px; }
+
+        .info-box {
+            background-color: var(--logo-red);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .info-box a { color: white; text-decoration: none; border-bottom: 1px dotted white; }
+
+        .map-container {
+            margin-top: 30px;
+            border: 4px solid var(--logo-red);
+            border-radius: 8px;
+            overflow: hidden;
+            height: 350px;
+        }
+
+        footer {
+            background-color: var(--bg-vanilla-creme);
+            text-align: center;
+            padding: 25px;
+            color: var(--logo-red);
+            font-weight: bold;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 850px) {
+            .logo-container h1 { font-size: 2.2rem; }
+            .circle-90 { width: 55px; height: 55px; font-size: 1.6rem; }
+            nav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+            .btn-highlight { grid-column: span 2; text-align: center; }
+            .hero-content { flex-direction: column; text-align: center; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .info-box { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <header>
+        <div class="logo-container">
+            <h1>LA TOMBOLA</h1>
+            <div id="number-circle" class="circle-90">90</div>
+        </div>
+        <nav>
+            <a href="#top">Home</a>
+            <a href="#tagesangebote">Angebote</a>
+            <a href="speisekarte.html">Speisekarte</a>
+            <a href="galerie.html">Galerie</a>
+            <a href="#kontakt">Kontakt</a>
+            <a href="tel:020140870" class="btn-highlight">Anrufen & Bestellen</a>
+        </nav>
+    </header>
+
+    <section class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Tradition & Leidenschaft <br> seit 1990</h2>
+                <p>Italienische Steinofenpizza im Herzen von Werden</p>
+            </div>
+            <div class="slider-box">
+                <img src="logo_bild1.jpg" class="active">
+                <img src="logo_bild2.jpg">
+                <img src="logo_bild3.jpg">
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="tagesangebote">
+            <h2 class="section-title">Highlights</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h3>Pizza Natale <span style="float:right">15,00 €</span></h3>
+                    <p>Mozzarella, Äpfel, Speck, Feta, karamellisierte Zwiebeln.</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Dessert Pizza <span style="float:right">5,00 €</span></h3>
+                    <p>Nutella, Mandeln, Puderzucker.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontakt">
+            <div class="info-box">
+                <div class="info-column">
+                    <h3>Kontakt</h3>
+                    <p>Brückstraße 49, 45239 Essen</p>
+                    <p>Tel: <a href="tel:020140870">0201 40870</a></p>
+                    <p>E-Mail: <a href="mailto:info@latombola90.de">info@latombola90.de</a></p>
+                </div>
+                <div class="info-column">
+                    <h3>Öffnungszeiten</h3>
+                    <p>Mo - So: 11.30 - 22.00 Uhr<br><em>Dienstag Ruhetag</em></p>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2489.155554157132!2d7.001555815771!3d51.38920437961555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b8e627f5f84d07%3A0x6a2c270d196412f!2sBr%C3%BCckstra%C3%9Fe%2049%2C%2045239%20Essen!5e0!3m2!1sde!2sde!4v1641000000000"></iframe>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        © 2026 Pizzeria LA TOMBOLA 90 | <a href="mailto:info@latombola90.de" style="color:inherit; text-decoration:none;">info@latombola90.de</a>
+    </footer>
+
+    <script>
+        // --- AUTOMATISCHER TOMBOLA-EFFEKT ---
+        const circle = document.getElementById('number-circle');
+
+        function startTombolaEffect() {
+            // 1. Phase: Wirbeln (Zufallszahlen zwischen 0 und 90) für 5 Sekunden
+            const randomInterval = setInterval(() => {
+                circle.innerText = Math.floor(Math.random() * 91);
+            }, 70);
+
+            // 2. Phase: Nach 5 Sekunden anhalten auf der 90
+            setTimeout(() => {
+                clearInterval(randomInterval);
+                circle.innerText = "90";
+
+                // 3. Phase: 5 Sekunden warten, dann wieder von vorne starten
+                setTimeout(startTombolaEffect, 5000);
+            }, 5000);
+        }
+
+        // Starte den Effekt beim Laden der Seite
+        startTombolaEffect();
+
+        // Slider Logik
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-box img');
+        if(slides.length > 0) {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
