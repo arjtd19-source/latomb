@@ -257,7 +257,6 @@
             <p>Trage deine E-Mail ein und wähle eine Glückszahl (0-90).<br>Jeder neue Teilnehmer gewinnt!</p>
             
             <input type="email" id="gameEmail" placeholder="Deine E-Mail Adresse" required>
-            
             <input type="number" id="gameInput" min="0" max="90" placeholder="?">
             <button id="gameBtn" class="game-btn" onclick="runTombolaGame()">Jetzt Spielen</button>
             
@@ -408,7 +407,7 @@
             }, 3500);
         }
 
-        /* --- TOMBOLA SPIEL LOGIK MIT E-MAIL UPLOAD --- */
+        /* --- NEUE TOMBOLA SPIEL LOGIK (NUR E-MAIL SENDEN) --- */
         function openGame() {
             document.getElementById('game-overlay').style.display = 'flex';
             document.getElementById('gameResult').innerHTML = "";
@@ -441,44 +440,41 @@
                 return;
             }
 
-            // Prüfung: Hat diese Email lokal schon gespielt?
             if (localStorage.getItem('played_' + email)) {
                 resultDiv.innerHTML = "<span style='color:red'>Diese E-Mail hat bereits teilgenommen!</span>";
                 return;
             }
 
-            // Spielstart
+            // Spielablauf
             btn.disabled = true;
             resultDiv.innerHTML = "Die Trommel dreht sich... 🎲";
             
-            // DATENBANK SPEICHERN
+            // Speichern UND Senden (passiert jetzt über Google Script)
             saveEmailToDatabase(email);
 
             setTimeout(() => {
-                // Kunde gewinnt immer
-                const winCode = "WILLKOMMEN-10-" + Math.floor(1000 + Math.random() * 9000);
-                
+                // Keine Anzeige des Codes mehr, nur Bestätigung
                 resultDiv.innerHTML = `
                     <div class="win-code-box">
                         🎉 GLÜCKWUNSCH! <br>
-                        Wir schenken dir 10% auf deine erste Bestellung!<br>
-                        Dein Code: <strong>${winCode}</strong>
-                    </div>
-                    <p style="font-size:0.8rem; margin-top:5px;">Code dem Kellner nennen.</p>`;
+                        Wir haben deinen persönlichen Gewinncode an:<br>
+                        <strong>${email}</strong> gesendet.<br>
+                        <span style="font-size:0.8rem; font-weight:normal;">(Prüfe auch den Spam-Ordner)</span>
+                    </div>`;
 
                 localStorage.setItem('played_' + email, 'true');
             }, 1500);
         }
 
-        // --- HIER IST DER EINGEFÜGTE LINK ---
         function saveEmailToDatabase(email) {
+            // URL aus deinem vorigen Chat (bleibt gleich, wenn du 'Version verwalten' updatest)
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwCCzxu19LepVlQE2MJa8ZMO-eVgFVPyCE5t7XdLcM65Ua0qGqgSjmM34grOpgXuGMm/exec';
             const formData = new FormData();
             formData.append('email', email);
 
-            // Senden (no-cors verhindert Fehler bei externen Requests)
+            // Senden
             fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-                .then(() => console.log('E-Mail gesendet.'))
+                .then(() => console.log('Anfrage an Google Script gesendet (Speichern + Mail).'))
                 .catch(error => console.error('Fehler beim Senden:', error));
         }
     </script>
