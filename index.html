@@ -8,9 +8,9 @@
     <style>
         :root {
             --logo-red: #631a1e;        
-            --bg-nougat: #bdaf95;       
+            --bg-nougat: #bdaf95;        
             --bg-vanilla-creme: #d6cbb0; 
-            --text-dark: #1a1a1a;       
+            --text-dark: #1a1a1a;        
             --white: #ffffff;
         }
 
@@ -65,36 +65,35 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 25px; 
+            gap: 15px; 
             align-items: center;
         }
 
+        /* --- BUTTON DESIGN (Einheitlich) --- */
         nav a {
-            color: var(--logo-red); text-decoration: none;
-            font-weight: 900; text-transform: uppercase; 
-            font-size: 1.05rem; 
+            color: var(--logo-red); 
+            text-decoration: none;
+            font-weight: 900; 
+            text-transform: uppercase; 
+            font-size: 1rem; 
             cursor: pointer;
-            padding: 5px 10px; 
-            transition: transform 0.2s;
-        }
-        nav a:hover { transform: scale(1.05); }
-
-        .tombola-link {
             border: 2px solid var(--logo-red);
-            padding: 8px 20px !important; 
-            border-radius: 25px;
+            padding: 8px 20px; 
+            border-radius: 25px; 
             background: rgba(255,255,255,0.3);
             transition: all 0.3s ease;
         }
-        .tombola-link:hover {
+        nav a:hover, nav a.active { 
             background: var(--logo-red);
-            color: var(--white) !important;
+            color: var(--white);
+            transform: scale(1.05);
         }
-        
+
         .btn-highlight {
-            background-color: var(--logo-red); color: var(--white) !important;
+            background-color: var(--logo-red) !important; 
+            color: var(--white) !important;
             padding: 12px 35px !important; 
-            border-radius: 8px;
+            border-radius: 8px !important;
             display: inline-flex;
             align-items: center;
             gap: 10px; 
@@ -131,47 +130,10 @@
         }
         
         .modal-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; }
-        
-        /* TOMBOLA STYLES */
-        .game-window input[type="number"] {
-            padding: 10px; font-size: 22px; width: 80px; text-align: center;
-            border: 2px solid var(--bg-nougat); border-radius: 8px; margin: 15px 0;
-            font-family: 'Georgia', serif; color: var(--logo-red); font-weight: bold;
-        }
-        
-        .game-window input[type="email"] {
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 12px;
-            border: 2px solid var(--logo-red);
-            border-radius: 8px;
-            font-family: 'Georgia', serif;
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        .game-btn {
-            background-color: var(--logo-red); color: white; border: none;
-            padding: 12px 30px; font-size: 18px; cursor: pointer;
-            border-radius: 50px; font-family: 'Georgia', serif; text-transform: uppercase;
-            width: 100%; margin-top: 10px;
-        }
-        .game-btn:disabled { background-color: #999; cursor: not-allowed; }
-        
-        .win-code-box {
-            background: #e8f5e9; border: 2px dashed #2e7d32;
-            padding: 15px; margin-top: 15px; color: #1b5e20; font-weight: bold;
-            animation: popIn 0.5s ease;
-        }
-        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
-
-        .game-result { margin-top: 15px; min-height: 40px; font-weight: bold; }
-        .game-info { font-size: 0.8rem; color: #777; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px;}
 
         /* BESTELLEN STYLES */
         .order-phone {
-            display: block; margin-top: 15px; font-size: 2rem; font-weight: bold;
+            display: block; margin-top: 15px; font-size: 1.8rem; font-weight: bold;
             color: var(--logo-red); text-decoration: none;
             border: 2px dashed var(--logo-red); padding: 10px; border-radius: 10px;
             transition: all 0.3s;
@@ -192,7 +154,7 @@
             justify-content: space-between; align-items: center; gap: 40px;
         }
 
-        .hero-text h2 { font-size: 3rem; margin: 0; }
+        .hero-text h2 { font-size: 3rem; margin: 0; text-shadow: 2px 2px 4px black; }
 
         .slider-box {
             width: 350px; height: 250px; position: relative;
@@ -250,29 +212,26 @@
 </head>
 <body id="top">
 
-    <div id="game-overlay" class="modal-overlay">
-        <div class="modal-window game-window">
-            <span class="close-modal" onclick="closeGame()">&times;</span>
-            <h2>🍕 Tombola 🍕</h2>
-            <p>Trage deine E-Mail ein und wähle eine Glückszahl (0-90).</p>
-            
-            <input type="email" id="gameEmail" placeholder="Deine E-Mail Adresse" required>
-            <input type="number" id="gameInput" min="0" max="90" placeholder="?">
-            <button id="gameBtn" class="game-btn" onclick="runTombolaGame()">Jetzt Spielen</button>
-            
-            <div id="gameResult" class="game-result"></div>
-            <div class="game-info" id="gameStatus">Nur 1x pro E-Mail-Adresse.</div>
-        </div>
-    </div>
-
-    <div id="order-overlay" class="modal-overlay" onclick="closeOrderOverlay(event)">
+    <div id="order-overlay" class="modal-overlay" onclick="closeModals(event)">
         <div class="modal-window" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="closeOrderOverlay()">&times;</span>
+            <span class="close-modal" onclick="closeModals()">&times;</span>
             <h2><i class="fas fa-phone-alt"></i> Bestellung</h2>
             <p style="font-size: 1.2rem; margin-top: 20px;">
                 Gerne nehmen wir Ihre Bestellung telefonisch entgegen:
             </p>
-            <a href="tel:020140870" class="order-phone">0201 40870</a>
+            <a href="tel:020140870037" class="order-phone">0201 40 87 00 37</a>
+        </div>
+    </div>
+
+    <div id="coming-soon-overlay" class="modal-overlay" onclick="closeModals(event)">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeModals()">&times;</span>
+            <h2><i class="fas fa-dice"></i> TOMBOLA</h2>
+            <div style="margin: 30px 0;">
+                <i class="fas fa-hammer" style="font-size: 3rem; color: var(--logo-red);"></i>
+            </div>
+            <p style="font-size: 1.5rem; font-weight: bold;">COMING SOON</p>
+            <p>Wir arbeiten gerade an unserem Gewinnspiel.</p>
         </div>
     </div>
 
@@ -283,11 +242,11 @@
         </div>
         <nav>
             <div class="nav-links">
-                <a href="#" onclick="openGame()" class="tombola-link"><i class="fas fa-dice"></i> TOMBOLA</a>
-                <a href="tagesangebote.html">Tagesangebote</a>
+                <a href="index.html" class="active">Startseite / Aktuelle Angebote</a> 
+                <a href="#" onclick="openComingSoon()">Tombola</a>
                 <a href="speisekarte.html">Speisekarte</a>
                 <a href="galerie.html">Galerie</a>
-                <a href="#kontakt">Kontakt</a>
+                <a href="#kontakt">Kontakt & Anfahrt</a>
             </div>
             <a href="#" onclick="handleOrderClick(event)" class="btn-highlight"><i class="fas fa-phone"></i> BESTELLEN</a>
         </nav>
@@ -296,19 +255,19 @@
     <section class="hero-container">
         <div class="hero-content">
             <div class="hero-text">
-                <h2>Tradition & Leidenschaft <br> seit 1990</h2>
+                <h2>Original italienische <br> Steinofenpizza seit 1990</h2>
             </div>
             <div class="slider-box">
-                <img src="logo_bild1.jpg" class="active">
-                <img src="logo_bild2.jpg">
-                <img src="logo_bild3.jpg">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=80" class="active">
+                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?auto=format&fit=crop&w=500&q=80">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80">
             </div>
         </div>
     </section>
 
     <div class="container">
         <section id="tagesangebote-preview">
-            <h2 class="section-title">Tagesangebote</h2>
+            <h2 class="section-title">Aktuelle Angebote</h2>
             <div id="tagesangebote-container" class="menu-grid">
                 <p style="grid-column: 1/-1; text-align:center;">Angebote werden geladen...</p>
             </div>
@@ -320,12 +279,21 @@
         <section id="kontakt" style="margin-top: 80px;">
             <div class="info-box">
                 <div class="info-column">
-                    <h3>Kontakt</h3>
-                    <p>Brückstraße 49, 45239 Essen<br>Tel: <a href="tel:020140870" style="border-bottom: 1px dotted white;">0201 40870</a></p>
+                    <h3><i class="fas fa-map-marker-alt"></i> Adresse</h3>
+                    <p>
+                        <strong>Pizzeria LA TOMBOLA 90</strong><br>
+                        Brückstraße 49<br>
+                        45239 Essen-Werden
+                    </p>
+                    <p>Tel: <a href="tel:020140870037" style="border-bottom: 1px dotted white; font-weight:bold;">0201 40 87 00 37</a></p>
                 </div>
                 <div class="info-column">
-                    <h3>Öffnungszeiten</h3>
-                    <p>Mo - So: 11.30 - 22.00 Uhr<br>Dienstag Ruhetag</p>
+                    <h3><i class="far fa-clock"></i> Öffnungszeiten</h3>
+                    <p>
+                        <strong>Mo + Mi - Sa:</strong><br> 11:25 - 22:00 Uhr<br>
+                        <strong>Sonn- & Feiertage:</strong><br> 13:00 - 22:00 Uhr<br>
+                        <span style="color: #ffebee; font-weight: bold; display:block; margin-top:5px;">Dienstag Ruhetag!</span>
+                    </p>
                 </div>
                 <div class="info-column" style="text-align: center;">
                     <h3>Social Media</h3>
@@ -340,8 +308,8 @@
         <section id="impressum">
             <h2 class="section-title">Impressum</h2>
             <div style="text-align: center; background: rgba(255,255,255,0.5); padding: 20px; border-radius: 8px;">
-                <p><strong>Pizzeria LA TOMBOLA 90</strong><br>Brückstraße 49, 45239 Essen</p>
-                <p>Inhaber: [Name einfügen]<br>Tel: 0201 40870<br>E-Mail: info@latombola90.de</p>
+                <p><strong>Pizzeria LA TOMBOLA 90</strong><br>Brückstraße 49, 45239 Essen-Werden</p>
+                <p>Tel: 0201 40 87 00 37</p>
             </div>
         </section>
     </div>
@@ -352,21 +320,27 @@
     </footer>
 
     <script>
-        /* --- BESTELL BUTTON LOGIK --- */
+        /* --- BUTTON LOGIK --- */
         function handleOrderClick(event) {
             event.preventDefault();
             if (window.innerWidth > 850) {
                 document.getElementById('order-overlay').style.display = 'flex';
             } else {
-                window.location.href = "tel:020140870";
+                window.location.href = "tel:020140870037";
             }
         }
 
-        function closeOrderOverlay(event) {
-            document.getElementById('order-overlay').style.display = 'none';
+        function openComingSoon() {
+            document.getElementById('coming-soon-overlay').style.display = 'flex';
         }
 
-        /* --- TAGESANGEBOTE & ANIMATION --- */
+        function closeModals(event) {
+            document.querySelectorAll('.modal-overlay').forEach(el => el.style.display = 'none');
+        }
+
+        function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
+
+        /* --- TAGESANGEBOTE (Google Sheets Fetch) --- */
         async function fetchSheetData() {
             const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4iarO4GDUatu19QSFTPOOty6Xkl9QjWDP-MINEMEXH4ZxmZZFTujUxOSxPOsNk2Fd1iKtfmRsF1F-/pub?gid=0&single=true&output=csv';
             const container = document.getElementById('tagesangebote-container');
@@ -388,15 +362,33 @@
         }
         fetchSheetData();
 
-        function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
-
+        /* --- 90er ANIMATION (4x Wechseln, 8s Pause) --- */
         const circle = document.getElementById('number-circle');
+        let spinCount = 0;
+        const maxSpins = 4;
+
         function tombola() {
-            const inter = setInterval(() => { circle.innerText = Math.floor(Math.random()*91); }, 70);
-            setTimeout(() => { clearInterval(inter); circle.innerText = "90"; setTimeout(tombola, 5000); }, 5000);
+            if (spinCount >= maxSpins) return;
+
+            let counter = 0;
+            const inter = setInterval(() => {
+                circle.innerText = Math.floor(Math.random() * 91);
+                counter++;
+                
+                if(counter > 20) {
+                    clearInterval(inter);
+                    circle.innerText = "90"; 
+                    spinCount++;
+                    
+                    if(spinCount < maxSpins) {
+                        setTimeout(tombola, 8000);
+                    }
+                }
+            }, 70);
         }
         tombola();
 
+        /* --- SLIDER --- */
         let cur = 0;
         const imgs = document.querySelectorAll('.slider-box img');
         if(imgs.length > 0) {
@@ -405,77 +397,6 @@
                 cur = (cur + 1) % imgs.length;
                 imgs[cur].classList.add('active');
             }, 3500);
-        }
-
-        /* --- LOGIK: NUR E-MAIL SENDEN --- */
-        function openGame() {
-            document.getElementById('game-overlay').style.display = 'flex';
-            document.getElementById('gameResult').innerHTML = "";
-            document.getElementById('gameBtn').disabled = false;
-        }
-
-        function closeGame() {
-            document.getElementById('game-overlay').style.display = 'none';
-        }
-
-        function isValidEmail(email) {
-            return /\S+@\S+\.\S+/.test(email);
-        }
-
-        function runTombolaGame() {
-            const emailInput = document.getElementById('gameEmail');
-            const numberInput = document.getElementById('gameInput');
-            const resultDiv = document.getElementById('gameResult');
-            const btn = document.getElementById('gameBtn');
-
-            const email = emailInput.value.trim().toLowerCase();
-            const number = numberInput.value;
-
-            if (!isValidEmail(email)) {
-                resultDiv.innerHTML = "<span style='color:red'>Bitte eine gültige E-Mail eingeben!</span>";
-                return;
-            }
-            if (number === "" || number < 0 || number > 90) {
-                resultDiv.innerHTML = "<span style='color:red'>Bitte Zahl 0-90 wählen!</span>";
-                return;
-            }
-
-            if (localStorage.getItem('played_' + email)) {
-                resultDiv.innerHTML = "<span style='color:red'>Diese E-Mail hat bereits teilgenommen!</span>";
-                return;
-            }
-
-            // Spielablauf
-            btn.disabled = true;
-            resultDiv.innerHTML = "Die Trommel dreht sich... 🎲";
-            
-            // Speichern UND Senden via Google Script
-            saveEmailToDatabase(email);
-
-            setTimeout(() => {
-                // Bestätigung (Code wird nicht angezeigt, sondern gemailt)
-                resultDiv.innerHTML = `
-                    <div class="win-code-box">
-                        🎉 GLÜCKWUNSCH! <br>
-                        Wir haben deinen persönlichen Gewinncode an:<br>
-                        <strong>${email}</strong> gesendet.<br>
-                        <span style="font-size:0.8rem; font-weight:normal;">(Prüfe auch den Spam-Ordner)</span>
-                    </div>`;
-
-                localStorage.setItem('played_' + email, 'true');
-            }, 1500);
-        }
-
-        function saveEmailToDatabase(email) {
-            // URL zum Google Script
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwCCzxu19LepVlQE2MJa8ZMO-eVgFVPyCE5t7XdLcM65Ua0qGqgSjmM34grOpgXuGMm/exec';
-            const formData = new FormData();
-            formData.append('email', email);
-
-            // Senden
-            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-                .then(() => console.log('Anfrage an Google Script gesendet.'))
-                .catch(error => console.error('Fehler beim Senden:', error));
         }
     </script>
 </body>

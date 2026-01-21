@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speisekarte | Pizzeria LA TOMBOLA 90</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --logo-red: #631a1e;       
-            --bg-nougat: #bdaf95;      
+            --logo-red: #631a1e;        
+            --bg-nougat: #bdaf95;        
             --bg-vanilla-creme: #d6cbb0; 
-            --text-dark: #1a1a1a;    
+            --text-dark: #1a1a1a;        
             --white: #ffffff;
         }
 
@@ -17,336 +18,234 @@
 
         body {
             font-family: 'Georgia', serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-nougat);
             color: var(--text-dark);
             line-height: 1.6;
         }
 
-        /* HEADER (Synchron zu Index) */
+        /* --- HEADER --- */
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
-            padding: 15px 0;
+            padding: 15px 0; 
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
         }
 
         .logo-container h1 {
-            color: var(--logo-red);
-            margin: 0;
-            font-size: 3.2rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 900;
-            line-height: 1;
+            color: var(--logo-red); margin: 0;
+            font-size: 3.5rem; text-transform: uppercase;
+            letter-spacing: 4px; font-weight: 900; line-height: 1;
         }
 
         .circle-90 {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border: 3px solid var(--logo-red);
-            border-radius: 50%;
-            margin-top: 10px;
-            color: var(--logo-red);
-            font-size: 1.8rem;
-            font-weight: 900;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 70px; height: 70px; 
+            border: 4px solid var(--logo-red);
+            background-color: var(--logo-red);
+            border-radius: 50%; margin-top: 5px; 
+            color: var(--white);
+            font-size: 2.2rem; font-weight: 900;
+            cursor: default;
             user-select: none;
         }
 
-        .circle-90:hover { background-color: var(--logo-red); color: var(--white); transform: scale(1.1); }
-
         nav { 
-            margin-top: 15px; 
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            margin-top: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 15px; 
             padding: 0 10px;
         }
 
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px; 
+            align-items: center;
+        }
+
+        /* --- BUTTON DESIGN --- */
         nav a {
-            color: var(--logo-red);
+            color: var(--logo-red); 
             text-decoration: none;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            padding: 5px 8px;
+            font-weight: 900; 
+            text-transform: uppercase; 
+            font-size: 1rem; 
+            cursor: pointer;
+            border: 2px solid var(--logo-red); 
+            padding: 8px 20px; 
+            border-radius: 25px; 
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        nav a:hover, nav a.active { 
+            background: var(--logo-red);
+            color: var(--white);
+            transform: scale(1.05);
         }
 
         .btn-highlight {
-            background-color: var(--logo-red);
+            background-color: var(--logo-red) !important; 
             color: var(--white) !important;
-            padding: 8px 18px !important;
-            border-radius: 5px;
+            padding: 12px 35px !important; 
+            border-radius: 8px !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px; 
+            font-size: 1.2rem !important;
+            margin-top: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* SPEISEKARTE STYLES */
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 15px;
+        /* --- MODALS --- */
+        .modal-overlay {
+            display: none; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 3000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
         }
 
-        .menu-section {
-            background-color: var(--bg-vanilla-creme);
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+        .modal-window {
+            background: var(--white);
+            border: 4px solid var(--logo-red);
+            padding: 30px; border-radius: 15px;
+            text-align: center; width: 90%; max-width: 450px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            position: relative;
+            animation: slideDown 0.4s ease-out;
         }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .menu-category-title {
-            color: var(--logo-red);
-            text-align: center;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--logo-red);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-
-        .price-header {
-            display: flex;
-            justify-content: flex-end;
-            font-weight: bold;
-            color: var(--logo-red);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            gap: 20px;
-            padding-right: 5px;
-        }
-
-        .menu-table { width: 100%; border-collapse: collapse; }
-        .menu-row { border-bottom: 1px dotted rgba(99, 26, 30, 0.3); }
-        .menu-row:last-child { border-bottom: none; }
-
-        .menu-info { padding: 12px 0; vertical-align: top; }
-        .menu-item-name { font-weight: bold; font-size: 1.1rem; color: var(--logo-red); display: block; }
-        .menu-item-description { font-size: 0.85rem; font-style: italic; color: #444; display: block; }
-
-        .menu-price-cell {
-            padding: 12px 0;
-            text-align: right;
-            font-weight: bold;
-            vertical-align: top;
-            white-space: nowrap;
-            width: 70px;
-            color: var(--logo-red);
-        }
-
-        footer {
-            background-color: var(--bg-vanilla-creme);
-            text-align: center;
-            padding: 20px;
-            color: var(--logo-red);
+        .close-modal {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 24px; color: var(--logo-red); cursor: pointer;
             font-weight: bold;
         }
-
-        /* MOBILE OPTIMIERUNG */
-        @media (max-width: 600px) {
-            .logo-container h1 { font-size: 2rem; }
-            .menu-category-title { font-size: 1.4rem; }
-            .menu-item-name { font-size: 1rem; }
-            .price-header span { width: 50px; text-align: right; }
-            .menu-price-cell { width: 55px; font-size: 0.9rem; }
-            nav { display: grid; grid-template-columns: 1fr 1fr; }
-            .btn-highlight { grid-column: span 2; text-align: center; }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo-container">
-            <h1>LA TOMBOLA</h1>
-            <div id="number-circle" class="circle-90">90</div>
-        </div>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="speisekarte.html" style="border-bottom: 2px solid var(--logo-red);">Speisekarte</a>
-            <a href="galerie.html">Galerie</a>
-            <a href="tel:020140870" class="btn-highlight">Bestellen</a>
-        </nav>
-    </header>
-
-    <div class="container">
         
-        <div class="menu-section">
-            <h2 class="menu-category-title">Pizza Classica</h2>
-            <div class="price-header">
-                <span>Ø 35cm</span>
-                <span>Ø 22cm</span>
-            </div>
-            <table class="menu-table">
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">1. Margherita</span>
-                        <span class="menu-item-description">Tomate, Mozzarella</span>
-                    </td>
-                    <td class="menu-price-cell">4,50 €</td>
-                    <td class="menu-price-cell">2,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">2. Salami</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Salami</span>
-                    </td>
-                    <td class="menu-price-cell">5,50 €</td>
-                    <td class="menu-price-cell">3,00 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">3. Napoli</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Sardellen, Oliven</span>
-                    </td>
-                    <td class="menu-price-cell">6,00 €</td>
-                    <td class="menu-price-cell">3,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">4. Prosciutto Funghi</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Schinken, Champignons</span>
-                    </td>
-                    <td class="menu-price-cell">6,50 €</td>
-                    <td class="menu-price-cell">4,00 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">5. Spinaci</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Spinat, Knoblauch</span>
-                    </td>
-                    <td class="menu-price-cell">6,50 €</td>
-                    <td class="menu-price-cell">4,00 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">6. Diavolo</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Salami Calabrese, Peperoni, Oliven</span>
-                    </td>
-                    <td class="menu-price-cell">7,00 €</td>
-                    <td class="menu-price-cell">4,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">7. Hawaii</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Schinken, Ananas</span>
-                    </td>
-                    <td class="menu-price-cell">7,00 €</td>
-                    <td class="menu-price-cell">4,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">8. Vegetariana</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, frisches Gemüse</span>
-                    </td>
-                    <td class="menu-price-cell">7,00 €</td>
-                    <td class="menu-price-cell">4,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">9. Tonno Cipolla</span>
-                        <span class="menu-item-description">Tomate, Mozzarella, Thunfisch, Zwiebeln</span>
-                    </td>
-                    <td class="menu-price-cell">7,50 €</td>
-                    <td class="menu-price-cell">5,00 €</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="menu-section">
-            <h2 class="menu-category-title">Pizza Gusto</h2>
-            <div class="price-header"><span>Ø 35cm</span><span>Ø 22cm</span></div>
-            <table class="menu-table">
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">10. Parma Rucola</span>
-  <!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speisekarte | LA TOMBOLA 90</title>
-    <style>
-        :root {
-            --logo-red: #631a1e;       
-            --bg-nougat: #bdaf95;      
-            --bg-vanilla-creme: #d6cbb0; 
-            --text-dark: #1a1a1a;    
+        .order-phone {
+            display: block; margin-top: 15px; font-size: 1.8rem; font-weight: bold;
+            color: var(--logo-red); text-decoration: none;
+            border: 2px dashed var(--logo-red); padding: 10px; border-radius: 10px;
+            transition: all 0.3s;
         }
+        .order-phone:hover { background: var(--logo-red); color: white; }
 
-        body {
-            font-family: 'Georgia', serif;
-            margin: 0;
-            background-color: var(--bg-nougat);
-            color: var(--text-dark);
-            line-height: 1.5;
-        }
+        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; min-height: 600px; }
 
-        header {
-            background-color: var(--bg-vanilla-creme);
-            border-bottom: 4px solid var(--logo-red);
-            padding: 15px 0;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo-container h1 { color: var(--logo-red); margin: 0; font-size: 3.2rem; text-transform: uppercase; font-weight: 900; line-height: 1; }
-        .circle-90 { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border: 3px solid var(--logo-red); border-radius: 50%; color: var(--logo-red); font-size: 1.8rem; font-weight: 900; margin-top: 5px; }
-
-        nav { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
-        nav a { color: var(--logo-red); text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.85rem; }
-
-        .container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
-
-        .menu-section {
-            background-color: var(--bg-vanilla-creme);
-            padding: 25px;
-            border-radius: 8px;
+        .section-title {
+            text-align: center; color: var(--logo-red);
+            border-bottom: 3px solid var(--logo-red);
+            padding-bottom: 10px; text-transform: uppercase; letter-spacing: 3px;
             margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .menu-category-title {
-            color: var(--logo-red);
-            text-align: center;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--logo-red);
-            padding-bottom: 10px;
+        /* --- SPEISEKARTE LAYOUT --- */
+        .menu-category-header {
+            background: var(--logo-red);
+            color: white;
+            padding: 10px;
+            margin-top: 50px;
             margin-bottom: 20px;
-            font-size: 1.6rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+        .size-labels {
+            font-size: 0.9rem;
+            display: flex;
+            gap: 15px;
+            min-width: 140px;
+            justify-content: flex-end;
+            font-weight: normal;
+        }
+        .size-labels span { width: 65px; text-align: right; }
+
+        .menu-grid-list { display: flex; flex-direction: column; gap: 15px; }
+        
+        .menu-item-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted var(--logo-red);
+            padding-bottom: 8px;
+            align-items: flex-end;
         }
 
-        .price-header { display: flex; justify-content: flex-end; font-weight: bold; color: var(--logo-red); margin-bottom: 10px; gap: 20px; font-size: 0.85rem; }
+        .item-details { flex: 1; padding-right: 15px; }
+        .item-name { font-weight: bold; font-size: 1.1rem; color: var(--logo-red); }
+        .item-desc { font-style: italic; font-size: 0.95rem; color: #333; }
+        .item-prices { display: flex; gap: 15px; min-width: 140px; justify-content: flex-end; font-weight: bold; color: var(--text-dark); }
+        .price-single { width: 65px; text-align: right; white-space: nowrap; }
 
-        .menu-table { width: 100%; border-collapse: collapse; }
-        .menu-row { border-bottom: 1px dotted rgba(99, 26, 30, 0.3); }
-        .menu-info { padding: 12px 0; }
-        .menu-item-name { font-weight: bold; color: var(--logo-red); display: block; font-size: 1.1rem; }
-        .menu-item-description { font-size: 0.85rem; font-style: italic; color: #444; }
-        .menu-price-cell { padding: 12px 0; text-align: right; font-weight: bold; width: 70px; color: var(--logo-red); }
+        .allergen-tag { font-size: 0.7rem; vertical-align: top; color: #666; font-weight: normal; margin-left: 2px; }
 
+        /* --- ALLERGEN LEGENDE --- */
+        .allergen-legend {
+            margin-top: 60px;
+            padding: 25px;
+            background: #e8e4dc;
+            border-top: 4px solid var(--logo-red);
+            font-size: 0.85rem;
+            color: #333;
+        }
+        .allergen-legend h4 { margin-top: 0; color: var(--logo-red); text-transform: uppercase; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 15px;}
+        
+        /* Grid für Legende: Links Zahlen, Rechts Buchstaben */
+        .legend-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .legend-column ul { list-style: none; padding: 0; margin: 0; }
+        .legend-column li { margin-bottom: 4px; }
+        .legend-column strong { color: var(--logo-red); display: inline-block; width: 25px; }
+
+        #impressum { display: none; margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--logo-red); }
         footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 25px; color: var(--logo-red); font-weight: bold; }
-        footer a { color: inherit; text-decoration: none; }
+        footer a { color: inherit; text-decoration: none; cursor: pointer; }
 
-        @media (max-width: 600px) {
-            .logo-container h1 { font-size: 2rem; }
-            nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
+        @media (max-width: 850px) {
+            .logo-container h1 { font-size: 2.2rem; }
+            .menu-category-header .size-labels { display: none; }
+            .item-prices { flex-direction: column; gap: 2px; min-width: auto; font-size: 1rem; }
+            .price-single { width: auto; text-align: right; }
+            .legend-container { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
-<body>
+<body id="top">
+
+    <div id="order-overlay" class="modal-overlay" onclick="closeModals(event)">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeModals()">&times;</span>
+            <h2><i class="fas fa-phone-alt"></i> Bestellung</h2>
+            <p style="font-size: 1.2rem; margin-top: 20px;">
+                Gerne nehmen wir Ihre Bestellung telefonisch entgegen:
+            </p>
+            <a href="tel:020140870037" class="order-phone">0201 40 87 00 37</a>
+        </div>
+    </div>
+
+    <div id="coming-soon-overlay" class="modal-overlay" onclick="closeModals(event)">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeModals()">&times;</span>
+            <h2><i class="fas fa-dice"></i> TOMBOLA</h2>
+            <div style="margin: 30px 0;">
+                <i class="fas fa-hammer" style="font-size: 3rem; color: var(--logo-red);"></i>
+            </div>
+            <p style="font-size: 1.5rem; font-weight: bold;">COMING SOON</p>
+            <p>Wir arbeiten gerade an unserem Gewinnspiel.</p>
+        </div>
+    </div>
 
     <header>
         <div class="logo-container">
@@ -354,100 +253,242 @@
             <div id="number-circle" class="circle-90">90</div>
         </div>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="speisekarte.html">Speisekarte</a>
-            <a href="tel:020140870">Anrufen</a>
+            <div class="nav-links">
+                <a href="index.html">Startseite / Aktuelle Angebote</a> 
+                <a href="#" onclick="openComingSoon()">Tombola</a>
+                <a href="speisekarte.html" class="active">Speisekarte</a>
+                <a href="index.html#kontakt">Kontakt & Anfahrt</a>
+            </div>
+            <a href="#" onclick="handleOrderClick(event)" class="btn-highlight"><i class="fas fa-phone"></i> BESTELLEN</a>
         </nav>
     </header>
 
     <div class="container">
-        <div class="menu-section">
-            <h2 class="menu-category-title">Pizza Classica</h2>
-            <div class="price-header"><span>Ø 35cm</span><span>Ø 22cm</span></div>
-            <table class="menu-table">
-                <tr class="menu-row">
-                    <td class="menu-info"><span class="menu-item-name">1. Margherita</span><span class="menu-item-description">Tomate, Mozzarella</span></td>
-                    <td class="menu-price-cell">4,50 €</td><td class="menu-price-cell">2,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info"><span class="menu-item-name">2. Salami</span><span class="menu-item-description">Tomate, Mozzarella, Salami</span></td>
-                    <td class="menu-price-cell">5,50 €</td><td class="menu-price-cell">3,00 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info"><span class="menu-item-name">7. Hawaii</span><span class="menu-item-description">Tomate, Mozzarella, Schinken, Ananas</span></td>
-                    <td class="menu-price-cell">7,00 €</td><td class="menu-price-cell">4,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info"><span class="menu-item-name">9. Tonno Cipolla</span><span class="menu-item-description">Tomate, Mozzarella, Thunfisch, Zwiebeln</span></td>
-                    <td class="menu-price-cell">7,50 €</td><td class="menu-price-cell">5,00 €</td>
-                </tr>
-            </table>
-        </div>
+        <section id="speisekarte-content">
+            <h2 class="section-title">Unsere Speisekarte</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+                Original italienische Steinofenpizza – mit Leidenschaft zubereitet.
+            </p>
+            
+            <div id="menu-content">
+                </div>
 
-        <div class="menu-section">
-            <h2 class="menu-category-title">Salate</h2>
-            <table class="menu-table">
-                <tr class="menu-row">
-                    <td class="menu-info"><span class="menu-item-name">16. Insalata mista</span><span class="menu-item-description">Gemischter Salat</span></td>
-                    <td class="menu-price-cell">4,50 €</td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-info"><span class="menu-item-name">20. Insalata Tombola</span><span class="menu-item-description">Gemischter Salat, Rucola, Shrimps, Schafskäse, Mandarinen</span></td>
-                    <td class="menu-price-cell">7,50 €</td>
-                </tr>
-            </table>
-        </div>
+            <div class="allergen-legend">
+                <h4>Allergene & Zusatzstoffe</h4>
+                <div class="legend-container">
+                    <div class="legend-column">
+                        <ul>
+                            <li><strong>1</strong> mit Farbstoff</li>
+                            <li><strong>2</strong> mit Konservierungsstoffen</li>
+                            <li><strong>3</strong> mit Antioxidationsmittel</li>
+                            <li><strong>4</strong> mit Säuerungsmittel</li>
+                            <li><strong>5</strong> mit Süßungsmittel</li>
+                            <li><strong>6</strong> mit Phosphat</li>
+                            <li><strong>7</strong> mit Geschmacksverstärker</li>
+                            <li><strong>8</strong> geschwärzt</li>
+                            <li><strong>9</strong> geschwefelt</li>
+                            <li><strong>10</strong> enthält eine Phenylalaninquelle</li>
+                            <li><strong>11</strong> koffeinhaltig</li>
+                            <li><strong>12</strong> alkoholhaltig</li>
+                            <li><strong>13</strong> chininhaltig</li>
+                        </ul>
+                    </div>
+                    <div class="legend-column">
+                        <ul>
+                            <li><strong>a</strong> = Glutenhaltiges Getreide</li>
+                            <li><strong>b</strong> = Krebstiere</li>
+                            <li><strong>c</strong> = Eier</li>
+                            <li><strong>d</strong> = Fische</li>
+                            <li><strong>e</strong> = Erdnüsse</li>
+                            <li><strong>f</strong> = Sojabohnen</li>
+                            <li><strong>g</strong> = Milch</li>
+                            <li><strong>i</strong> = Sellerie</li>
+                            <li><strong>j</strong> = Senf</li>
+                            <li><strong>k</strong> = Sesamsamen</li>
+                            <li><strong>l</strong> = Schwefeloxid u. Sulfite</li>
+                            <li><strong>m</strong> = Lupine</li>
+                            <li><strong>n</strong> = Weichtiere</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impressum">
+            <h2 class="section-title">Impressum</h2>
+            <div style="text-align: center; background: rgba(255,255,255,0.5); padding: 20px; border-radius: 8px;">
+                <p><strong>Pizzeria LA TOMBOLA 90</strong><br>Brückstraße 49, 45239 Essen-Werden</p>
+                <p>Tel: 0201 40 87 00 37</p>
+            </div>
+        </section>
     </div>
 
     <footer>
-        Pizzeria LA TOMBOLA | Brückstraße 49 | 45239 Essen<br>
-        Tel: 0201/40 87 0 | E-Mail: <a href="mailto:info@latombola90.de">info@latombola90.de</a>
+        © 2026 Pizzeria LA TOMBOLA 90 | 
+        <a onclick="showImpressum()" href="#impressum">Impressum</a>
     </footer>
 
     <script>
-        // Auch hier der automatische Effekt für die Markenkonsistenz
-        const circle = document.getElementById('number-circle');
-        function startTombolaEffect() {
-            const randomInterval = setInterval(() => { circle.innerText = Math.floor(Math.random() * 91); }, 70);
-            setTimeout(() => {
-                clearInterval(randomInterval);
-                circle.innerText = "90";
-                setTimeout(startTombolaEffect, 5000);
-            }, 5000);
+        /* --- BESTELL BUTTON & MODALS --- */
+        function handleOrderClick(event) {
+            event.preventDefault();
+            if (window.innerWidth > 850) {
+                document.getElementById('order-overlay').style.display = 'flex';
+            } else {
+                window.location.href = "tel:020140870037";
+            }
         }
-        startTombolaEffect();
-    </script>
-</body>
-</html>e class="menu-table">
-                <tr class="menu-row">
-                    <td class="menu-info">
-                        <span class="menu-item-name">22. Antipastiteller La Tombola</span>
-                        <span class="menu-item-description">Lassen Sie sich überraschen!</span>
-                    </td>
-                    <td class="menu-price-cell">9,50 €</td>
-                </tr>
-            </table>
-        </div>
 
-    </div>
+        function openComingSoon() {
+            document.getElementById('coming-soon-overlay').style.display = 'flex';
+        }
 
-    <footer>
-        <p>Pizzeria LA TOMBOLA | Brückstraße 49 | 45239 Essen</p>
-        <p>Tel: 0201/40 87 00 37</p>
-    </footer>
+        function closeModals(event) {
+            document.querySelectorAll('.modal-overlay').forEach(el => el.style.display = 'none');
+        }
 
-    <script>
+        function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
+
+        /* --- 90er ANIMATION --- */
         const circle = document.getElementById('number-circle');
-        let intervalId = null;
-        circle.addEventListener('mouseenter', () => {
-            intervalId = setInterval(() => {
-                circle.innerText = Math.floor(Math.random() * 90) + 1;
-            }, 60);
-        });
-        circle.addEventListener('mouseleave', () => {
-            clearInterval(intervalId);
-            circle.innerText = "90";
-        });
+        let spinCount = 0;
+        const maxSpins = 4; 
+
+        function tombola() {
+            if (spinCount >= maxSpins) return;
+            let counter = 0;
+            const inter = setInterval(() => {
+                circle.innerText = Math.floor(Math.random() * 91);
+                counter++;
+                if(counter > 20) {
+                    clearInterval(inter);
+                    circle.innerText = "90"; 
+                    spinCount++;
+                    if(spinCount < maxSpins) setTimeout(tombola, 8000);
+                }
+            }, 70);
+        }
+        tombola();
+
+        /* --- SPEISEKARTE DATEN MIT ECHTEN ALLERGENEN VOM BILD --- */
+        const menuData = [
+            {
+                category: "Pizza Classica",
+                labels: ["Ø 24cm", "Ø 35cm"],
+                items: [
+                    { id: "01", name: "Margherita", ag: "a,g", desc: "Tomate, Mozzarella, Basilikum", p1: "4,50 €", p2: "9,00 €" },
+                    { id: "02", name: "Salami", ag: "3,a,g", desc: "Tomate, Mozzarella, Salami", p1: "5,50 €", p2: "10,00 €" },
+                    { id: "03", name: "Napoli", ag: "8,a,d,g", desc: "Tomate, Mozzarella, Sardellen, Oliven", p1: "6,00 €", p2: "10,50 €" },
+                    { id: "04", name: "Prosciutto Funghi", ag: "2,a,g", desc: "Tomate, Mozzarella, Champignons, Kochschinken", p1: "6,50 €", p2: "11,50 €" },
+                    { id: "05", name: "Spinaci", ag: "a,g", desc: "Tomate, Mozzarella, Spinat, Knoblauch", p1: "6,00 €", p2: "11,00 €" },
+                    { id: "06", name: "Diavolo", ag: "3,1,a,g", desc: "piccante/scharf - Tomate, Mozzarella, Salami Calabrese, Oliven", p1: "6,50 €", p2: "11,50 €" },
+                    { id: "07", name: "Hawaii", ag: "1,a,g", desc: "Tomate, Mozzarella, Ananas, Kochschinken", p1: "7,50 €", p2: "12,50 €" },
+                    { id: "08", name: "Vegetariana", ag: "a,g", desc: "Tomate, Mozzarella, frisches Gemüse", p1: "7,00 €", p2: "12,00 €" },
+                    { id: "09", name: "Tonno e Cipolla", ag: "a,d,g", desc: "Tomate, Mozzarella, Thunfisch, Zwiebeln", p1: "7,50 €", p2: "12,50 €" },
+                    { id: "10", name: "Parma e Rucola", ag: "3,a,g", desc: "Tomate, Mozzarella, Schinken, Rucola, Parmesan", p1: "8,50 €", p2: "13,50 €" }
+                ]
+            },
+            {
+                category: "Pizza Gusto",
+                labels: ["Ø 24cm", "Ø 35cm"],
+                items: [
+                    { id: "11", name: "Luca", ag: "3,a,g", desc: "Tomate, Mozzarella, Gorgonzola, Speck, Parmesan", p1: "8,50 €", p2: "13,50 €" },
+                    { id: "12", name: "Bufala", ag: "a,g", desc: "Tomate, Büffelmozzarella, Kirschtomaten, Rucola", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "13", name: "Tombola", ag: "1,2,a,g", desc: "Tomate, Mozzarella, Salsiccia, Rucola, Parmesan", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "14", name: "Gambas", ag: "a,b,d,g", desc: "Tomate, Mozzarella, Shrimps, Gambas", p1: "8,50 €", p2: "15,00 €" },
+                    { id: "15", name: "Profumo di Mare", ag: "a,b,d,g,n", desc: "Tomate, Mozzarella, Meeresfrüchte", p1: "8,50 €", p2: "15,00 €" },
+                    { id: "16", name: "Siciliana", ag: "1,a,d,g", desc: "Tomate, Mozzarella, Sardellen, Kapern, rote Zwiebeln", p1: "7,50 €", p2: "12,00 €" },
+                    { id: "17", name: "Carpaccio", ag: "a,g", desc: "Tomate, Mozzarella, Rucola, Rindercarpaccio, Parmesan", p1: "8,50 €", p2: "15,00 €" },
+                    { id: "18", name: "Salmone", ag: "a,d,g", desc: "Tomate, Mozzarella, Lachs, Spinat, rosa Pfeffer", p1: "8,50 €", p2: "15,00 €" },
+                    { id: "19", name: "Contadina", ag: "a,g", desc: "Tomate, Mozzarella, getr. Tomaten, Rucola, Parmesan", p1: "7,50 €", p2: "12,00 €" },
+                    { id: "20", name: "Bresaola", ag: "a,g", desc: "Tomate, Mozzarella, Bresaola, Rucola, Parmesan", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "21", name: "Datteri", ag: "2,a,g", desc: "Tomate, Mozzarella, Datteln, Feta, Speck", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "22", name: "Primavera", ag: "a,g", desc: "Tomate, Mozzarella, Burrata, Rucola, Kirschtomaten", p1: "", p2: "15,00 €" },
+                    { id: "23", name: "Campagna", ag: "2,a,g", desc: "Tomate, Mozzarella, Burrata, Pancetta", p1: "", p2: "15,00 €" },
+                    { id: "24", name: "Tirolese", ag: "2,a,g", desc: "Tomate, Mozzarella, Feta, Kirschtomaten, Speck", p1: "8,50 €", p2: "14,00 €" }
+                ]
+            },
+            {
+                category: "Pizza Bianca",
+                labels: ["Ø 24cm", "Ø 35cm"],
+                items: [
+                    { id: "25", name: "Miele", ag: "1,2,a,d,g", desc: "Trüffelpesto, Mozzarella, Feta, Rucola, Honig", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "26", name: "D`oro", ag: "1,2,8,a,d,g", desc: "Trüffelpesto, Mozzarella, Salsiccia, Steinpilze, Parmesan", p1: "8,50 €", p2: "14,50 €" },
+                    { id: "27", name: "Patata", ag: "a,g", desc: "Mozzarella, Kartoffelscheiben, Pancetta, Parmesan", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "28", name: "Quattro Formaggi", ag: "a,g", desc: "Mozzarella, Gorgonzola, Feta, Parmesan", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "29", name: "Pera", ag: "2,a,g", desc: "Mozzarella, Birnen, Gorgonzola, Speck", p1: "8,50 €", p2: "14,00 €" },
+                    { id: "30", name: "Superbomba", ag: "", desc: "Belag nach Wahl", p1: "Ø 50 cm", p2: "a. A." }
+                ]
+            },
+            {
+                category: "Insalata",
+                labels: ["", ""],
+                items: [
+                    { id: "31", name: "Mista", ag: "", desc: "Salat, Mais, Kirschtomaten, Gurken, Rucola", p1: "", p2: "7,00 €" },
+                    { id: "32", name: "Rucola", ag: "g", desc: "Rucola, Parmesan, Kirschtomaten", p1: "", p2: "8,00 €" },
+                    { id: "33", name: "Tonno", ag: "a,g", desc: "Gemischter Salat mit Thunfisch", p1: "", p2: "9,00 €" },
+                    { id: "34", name: "Capricciosa", ag: "1,2,c,d,g", desc: "Gem. Salat, Thunfisch, Schinken, Mozzarella, Oliven, Ei", p1: "", p2: "10,50 €" },
+                    { id: "35", name: "Tombola", ag: "2,a,g", desc: "Gem. Salat, Thunfisch, getr. Tomaten, Feta, rote Zwiebeln", p1: "", p2: "10,50 €" },
+                    { id: "36", name: "Caesar Chicken", ag: "a,g", desc: "Salat, Putenbrust, Parmesan, Croutons", p1: "", p2: "11,50 €" },
+                    { id: "", name: "Dressings", ag: "", desc: "Joghurt / Cocktail / Caesar / Balsamico-Olivenöl", p1: "", p2: "" }
+                ]
+            },
+            {
+                category: "Antipasti & Pizzabrot",
+                labels: ["", ""],
+                items: [
+                    { id: "37", name: "Antipasti-Variationen", ag: "a,b,g", desc: "Gemischter Vorspeisenteller", p1: "", p2: "14,50 €" },
+                    { id: "38", name: "Carpaccio vom Rind", ag: "g", desc: "mit Rucola und Parmesan", p1: "", p2: "12,50 €" },
+                    { id: "39", name: "Büffelmozzarella-Caprese", ag: "g", desc: "mit Kirschtomaten und Rucola", p1: "", p2: "9,50 €" },
+                    { id: "00", name: "Pizzabrötchen", ag: "", desc: "mit Knoblauchbutter 3,00€ | Trüffelbutter 4,00€<br>nur Knoblauchbutter 1,50€ | nur Trüffelbutter 2,50€", p1: "", p2: "ab 1,50 €" },
+                    { id: "01", name: "Focaccia", ag: "a", desc: "mit Rosmarin, Salz und Knoblauch", p1: "", p2: "6,00 €" },
+                    { id: "02", name: "Marinara", ag: "a", desc: "Tomate, Knoblauch, Oregano", p1: "", p2: "7,00 €" }
+                ]
+            },
+            {
+                category: "Vino",
+                labels: ["0,75l", "0,2l"],
+                items: [
+                    { id: "", name: "Leverano Bianco", ag: "l", desc: "", p1: "12,00 €", p2: "5,00 €" },
+                    { id: "", name: "Primitivo", ag: "l", desc: "", p1: "12,00 €", p2: "5,00 €" }
+                ]
+            }
+        ];
+
+        function renderMenu() {
+            const container = document.getElementById('menu-content');
+            let html = "";
+            
+            menuData.forEach(cat => {
+                html += `
+                <div class="menu-category-header">
+                    <span>${cat.category}</span>
+                    <div class="size-labels">
+                        <span>${cat.labels[0]}</span>
+                        <span>${cat.labels[1]}</span>
+                    </div>
+                </div>
+                <div class="menu-grid-list">`;
+                
+                cat.items.forEach(item => {
+                    let tags = item.ag ? `<span class="allergen-tag">${item.ag}</span>` : '';
+                    html += `
+                    <div class="menu-item-row">
+                        <div class="item-details">
+                            <div class="item-name">${item.id ? item.id + '. ' : ''}${item.name}${tags}</div>
+                            <div class="item-desc">${item.desc}</div>
+                        </div>
+                        <div class="item-prices">
+                            <span class="price-single">${item.p1}</span>
+                            <span class="price-single">${item.p2}</span>
+                        </div>
+                    </div>`;
+                });
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMenu();
     </script>
 </body>
 </html>
