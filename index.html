@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizzeria LA TOMBOLA 90 | Essen Werden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
@@ -12,20 +13,22 @@
             --bg-vanilla-creme: #d6cbb0; 
             --text-dark: #1a1a1a;        
             --white: #ffffff;
+            --font-header: 'Open Sans', sans-serif;
+            --font-body: 'Georgia', serif;
         }
 
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: var(--font-body);
             margin: 0; padding: 0;
             background-color: var(--bg-nougat);
             color: var(--text-dark);
             line-height: 1.6;
         }
 
-        /* --- HEADER (Desktop: Sticky) --- */
+        /* --- HEADER --- */
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
@@ -33,6 +36,7 @@
             text-align: center;
             position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+            font-family: var(--font-header);
         }
 
         .logo-container h1 {
@@ -84,7 +88,7 @@
         nav a {
             color: var(--logo-red); 
             text-decoration: none;
-            font-weight: 900; 
+            font-weight: 700; 
             text-transform: uppercase; 
             font-size: 0.95rem; 
             cursor: pointer;
@@ -112,6 +116,7 @@
             font-size: 1.1rem !important;
             margin-top: 5px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: 700 !important;
         }
 
         /* --- MODALS --- */
@@ -141,7 +146,7 @@
             font-size: 24px; color: var(--logo-red); cursor: pointer;
             font-weight: bold;
         }
-        .modal-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; font-size: 1.5rem;}
+        .modal-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; font-size: 1.5rem; font-family: var(--font-header);}
         
         .order-phone {
             display: block; margin-top: 15px; font-size: 1.5rem; font-weight: bold;
@@ -149,11 +154,13 @@
             border: 2px dashed var(--logo-red); padding: 10px; border-radius: 10px;
             transition: all 0.3s;
             word-break: break-all;
+            font-family: var(--font-header);
         }
 
         /* --- HERO & REST --- */
         .hero-container {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                        /* HIER GGF. AUCH EIN EIGENES BILD ALS HINTERGRUND EINFÜGEN */
                         url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80');
             background-size: cover; background-position: center;
             padding: 40px 15px; display: flex; justify-content: center;
@@ -197,7 +204,7 @@
 
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .menu-item { border-left: 4px solid var(--logo-red); padding-left: 10px; }
-        .menu-item h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .menu-item h3 { font-size: 1.1rem; margin-bottom: 5px; font-family: var(--font-header); }
 
         .info-box {
             background-color: var(--logo-red); color: var(--white);
@@ -205,6 +212,7 @@
             justify-content: space-around; flex-wrap: wrap; gap: 20px; margin-top: 40px;
         }
         .info-box a { color: white; text-decoration: none; }
+        .info-box h3 { font-family: var(--font-header); margin-top: 0; text-transform: uppercase;}
 
         .brand-logos { display: flex; gap: 20px; margin-top: 10px; justify-content: center; align-items: center; }
         .brand-logos a { font-size: 2rem; }
@@ -225,12 +233,11 @@
             text-align: center;
         }
 
-        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 20px; color: var(--logo-red); font-weight: bold; font-size: 0.9rem; }
+        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 20px; color: var(--logo-red); font-weight: bold; font-size: 0.9rem; font-family: var(--font-header); }
         footer a { color: inherit; text-decoration: none; cursor: pointer; }
 
         /* --- MOBILE OPTIMIERUNG --- */
         @media (max-width: 850px) {
-            /* Header scrollt mit (nicht sticky) */
             header { position: relative; top: auto; }
 
             .logo-container h1 { font-size: 2rem; }
@@ -238,7 +245,7 @@
             .hero-content { flex-direction: column; text-align: center; }
             .hero-text { text-align: center; }
             
-            /* NEU: Slider auf Mobiltelefonen ausblenden */
+            /* Slider auf Mobiltelefonen ausblenden */
             .slider-box { display: none; }
 
             .menu-grid { grid-template-columns: 1fr; } 
@@ -302,9 +309,15 @@
                 <h2>Original italienische <br> Steinofenpizza seit 1990</h2>
             </div>
             <div class="slider-box">
-                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=80" class="active">
-                <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?auto=format&fit=crop&w=500&q=80">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80">
+                <img src="ihr_bild_1.jpg" class="active" alt="Slider Bild 1">
+                <img src="ihr_bild_2.jpg" alt="Slider Bild 2">
+                <img src="ihr_bild_3.jpg" alt="Slider Bild 3">
+                <img src="ihr_bild_4.jpg" alt="Slider Bild 4">
+                <img src="ihr_bild_5.jpg" alt="Slider Bild 5">
+                <img src="ihr_bild_6.jpg" alt="Slider Bild 6">
+                <img src="ihr_bild_7.jpg" alt="Slider Bild 7">
+                <img src="ihr_bild_8.jpg" alt="Slider Bild 8">
+                <img src="ihr_bild_9.jpg" alt="Slider Bild 9">
             </div>
         </div>
     </section>
@@ -316,7 +329,7 @@
                 <p style="grid-column: 1/-1; text-align:center;">Angebote werden geladen...</p>
             </div>
             <div style="text-align: center; margin-top: 30px;">
-                <a href="tagesangebote.html" style="background: var(--logo-red); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Alle Angebote anzeigen</a>
+                <a href="tagesangebote.html" style="background: var(--logo-red); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; font-family: var(--font-header);">Alle Angebote anzeigen</a>
             </div>
         </section>
 
@@ -413,7 +426,7 @@
                         const name = cols[0].replace(/"/g, "").trim();
                         const preis = cols[1].replace(/"/g, "").trim();
                         const beschr = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
-                        container.innerHTML += `<div class="menu-item"><h3>${name} <span style="float:right">${preis}</span></h3><p>${beschr}</p></div>`;
+                        container.innerHTML += `<div class="menu-item"><h3>${name} <span style="float:right; font-family:var(--font-header);">${preis}</span></h3><p>${beschr}</p></div>`;
                     }
                 }
             } catch (e) { container.innerHTML = "<p style='text-align:center;'>Angebote werden geladen...</p>"; }
