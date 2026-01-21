@@ -25,7 +25,7 @@
             line-height: 1.6;
         }
 
-        /* --- HEADER (Standard: Sticky) --- */
+        /* --- HEADER (Desktop: Sticky) --- */
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
@@ -191,7 +191,7 @@
             border-bottom: 1px dotted var(--logo-red);
             padding-bottom: 8px;
             align-items: flex-end;
-            flex-wrap: wrap; /* Wichtig für kleine Bildschirme */
+            flex-wrap: wrap; 
         }
 
         .item-details { flex: 1; padding-right: 15px; min-width: 200px; }
@@ -239,7 +239,7 @@
 
         /* --- MOBILE OPTIMIERUNG --- */
         @media (max-width: 850px) {
-            /* WICHTIG: Header scrollt auf Mobile mit (nicht sticky) */
+            /* Header scrollt mit (nicht sticky) */
             header { position: relative; top: auto; }
 
             .logo-container h1 { font-size: 2rem; }
@@ -288,7 +288,7 @@
             <h1>LA TOMBOLA</h1>
             <div id="number-circle" class="circle-90">90</div>
         </div>
-
+        
         <div class="header-socials">
             <a href="https://www.facebook.com/p/Pizzeria-La-Tombola-100054366672322/" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/pizzeria_la_tombola_90/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -296,7 +296,7 @@
 
         <nav>
             <div class="nav-links">
-                <a href="index.html">Startseite / Aktuelle Angebote</a> 
+                <a href="index.html">Home / AKTUELLE ANGEBOTE</a> 
                 <a href="#" onclick="openComingSoon()">Tombola</a>
                 <a href="speisekarte.html" class="active">Speisekarte</a>
                 <a href="index.html#kontakt">Kontakt & Anfahrt</a>
