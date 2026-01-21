@@ -52,8 +52,25 @@
             user-select: none;
         }
 
+        /* NEU: Social Media Icons im Header (passend zur Speisekarte) */
+        .header-socials {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .header-socials a {
+            color: var(--logo-red);
+            font-size: 1.4rem;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .header-socials a:hover {
+            transform: scale(1.2);
+        }
+
         nav { 
-            margin-top: 20px; 
+            margin-top: 15px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -69,7 +86,7 @@
             align-items: center;
         }
 
-        /* --- BUTTON DESIGN (Einheitlich) --- */
+        /* --- BUTTON DESIGN --- */
         nav a {
             color: var(--logo-red); 
             text-decoration: none;
@@ -197,7 +214,17 @@
         }
         .color-site .fa-facebook-f, .color-site .fa-instagram { color: var(--white); background: none; -webkit-text-fill-color: initial; }
 
-        #impressum { display: none; margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--logo-red); }
+        /* --- IMPRESSUM --- */
+        #impressum { 
+            display: none; 
+            margin-top: 60px; 
+            padding: 30px; 
+            border-top: 4px solid var(--logo-red);
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            text-align: center;
+        }
+
         footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 25px; color: var(--logo-red); font-weight: bold; }
         footer a { color: inherit; text-decoration: none; cursor: pointer; }
 
@@ -240,6 +267,12 @@
             <h1>LA TOMBOLA</h1>
             <div id="number-circle" class="circle-90">90</div>
         </div>
+
+        <div class="header-socials">
+            <a href="https://www.facebook.com/p/Pizzeria-La-Tombola-100054366672322/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/pizzeria_la_tombola_90/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+
         <nav>
             <div class="nav-links">
                 <a href="index.html" class="active">Startseite / Aktuelle Angebote</a> 
@@ -307,9 +340,21 @@
 
         <section id="impressum">
             <h2 class="section-title">Impressum</h2>
-            <div style="text-align: center; background: rgba(255,255,255,0.5); padding: 20px; border-radius: 8px;">
-                <p><strong>Pizzeria LA TOMBOLA 90</strong><br>Brückstraße 49, 45239 Essen-Werden</p>
-                <p>Tel: 0201 40 87 00 37</p>
+            <div style="line-height: 1.8;">
+                <p><strong>Angaben gemäß § 5 TMG:</strong></p>
+                <p>
+                    <strong>Pizzeria LA TOMBOLA 90</strong><br>
+                    Inhaber / Verantwortlich:<br>
+                    <strong>Cristiano Cofano</strong><br>
+                    Bruststraße 4<br>
+                    45239 Essen
+                </p>
+                <hr style="width: 50px; border-color: var(--logo-red); margin: 20px auto;">
+                <p>
+                    <strong>Kontakt (Pizzeria):</strong><br>
+                    Brückstraße 49, 45239 Essen-Werden<br>
+                    Telefon: 0201 40 87 00 37
+                </p>
             </div>
         </section>
     </div>
@@ -338,7 +383,12 @@
             document.querySelectorAll('.modal-overlay').forEach(el => el.style.display = 'none');
         }
 
-        function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
+        /* --- IMPRESSUM ANZEIGEN --- */
+        function showImpressum() { 
+            const imp = document.getElementById('impressum');
+            imp.style.display = 'block'; 
+            imp.scrollIntoView({ behavior: 'smooth' });
+        }
 
         /* --- TAGESANGEBOTE (Google Sheets Fetch) --- */
         async function fetchSheetData() {
