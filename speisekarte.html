@@ -25,7 +25,7 @@
             line-height: 1.6;
         }
 
-        /* --- HEADER --- */
+        /* --- HEADER (Standard: Sticky) --- */
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
@@ -239,32 +239,22 @@
 
         /* --- MOBILE OPTIMIERUNG --- */
         @media (max-width: 850px) {
+            /* WICHTIG: Header scrollt auf Mobile mit (nicht sticky) */
+            header { position: relative; top: auto; }
+
             .logo-container h1 { font-size: 2rem; }
             .circle-90 { width: 50px; height: 50px; font-size: 1.5rem; }
-            .menu-category-header .size-labels { display: none; } /* Größen Labels mobil weg */
+            .menu-category-header .size-labels { display: none; }
             .item-prices { 
-                flex-direction: row; /* Preise nebeneinander lassen wenn möglich */
+                flex-direction: row; 
                 margin-top: 8px; 
-                width: 100%; /* Volle Breite */
-                justify-content: space-between; /* Preise verteilen */
+                width: 100%; 
+                justify-content: space-between; 
             }
             .item-prices .price-single { text-align: right; }
-            
-            /* Legende untereinander */
             .legend-container { grid-template-columns: 1fr; gap: 20px; }
-            
             .nav-links { gap: 8px; }
             nav a { font-size: 0.85rem; padding: 6px 12px; }
-        }
-
-        /* --- QUERFORMAT (Landscape) auf Handys --- */
-        @media (max-height: 500px) and (orientation: landscape) {
-            header { position: relative; padding: 5px 0; }
-            .logo-container h1 { font-size: 1.8rem; display: inline-block; vertical-align: middle; margin-right: 10px; }
-            .circle-90 { width: 40px; height: 40px; font-size: 1.2rem; display: inline-flex; vertical-align: middle; }
-            .header-socials { display: inline-block; margin: 0 10px; }
-            nav { margin-top: 5px; }
-            .container { margin-top: 15px; }
         }
     </style>
 </head>
