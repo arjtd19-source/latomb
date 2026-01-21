@@ -15,8 +15,7 @@
         }
 
         html { scroll-behavior: smooth; }
-        
-        * { box-sizing: border-box; } /* Wichtig für Layout */
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Georgia', serif;
@@ -26,13 +25,15 @@
             line-height: 1.6;
         }
 
-        /* --- HEADER --- */
+        /* --- HEADER (Standard: Sticky für Desktop) --- */
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
             padding: 10px 0; 
             text-align: center;
-            position: sticky; top: 0; z-index: 1000;
+            position: sticky; /* Desktop: Klebt oben fest */
+            top: 0; 
+            z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
         }
 
@@ -54,10 +55,7 @@
             user-select: none;
         }
 
-        .header-socials {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
+        .header-socials { margin-top: 5px; margin-bottom: 5px; }
         .header-socials a {
             color: var(--logo-red);
             font-size: 1.4rem;
@@ -66,6 +64,7 @@
             transition: transform 0.2s;
             display: inline-block;
         }
+        .header-socials a:hover { transform: scale(1.2); }
 
         nav { 
             margin-top: 10px; 
@@ -96,7 +95,7 @@
             border-radius: 25px; 
             background: rgba(255,255,255,0.3);
             transition: all 0.3s ease;
-            white-space: nowrap; /* Verhindert Umbruch im Button */
+            white-space: nowrap;
         }
         nav a:hover, nav a.active { 
             background: var(--logo-red);
@@ -151,7 +150,7 @@
             color: var(--logo-red); text-decoration: none;
             border: 2px dashed var(--logo-red); padding: 10px; border-radius: 10px;
             transition: all 0.3s;
-            word-break: break-all; /* Falls Nummer zu lang */
+            word-break: break-all;
         }
 
         /* --- HERO & REST --- */
@@ -166,7 +165,7 @@
         .hero-content {
             max-width: 1100px; width: 100%; display: flex;
             justify-content: space-between; align-items: center; gap: 30px;
-            flex-wrap: wrap; /* Wichtig für Mobil */
+            flex-wrap: wrap; 
         }
 
         .hero-text { flex: 1; text-align: left; }
@@ -179,7 +178,7 @@
         .slider-box {
             width: 350px; height: 250px; position: relative;
             overflow: hidden; border: 4px solid var(--bg-vanilla-creme); border-radius: 12px;
-            flex-shrink: 0; /* Verhindert das Schrumpfen */
+            flex-shrink: 0; 
         }
 
         .slider-box img {
@@ -233,26 +232,18 @@
 
         /* --- MOBILE OPTIMIERUNG --- */
         @media (max-width: 850px) {
+            /* WICHTIG: Header scrollt auf Mobile mit (nicht sticky) */
+            header { position: relative; top: auto; }
+            
             .logo-container h1 { font-size: 2rem; }
             .circle-90 { width: 50px; height: 50px; font-size: 1.5rem; }
             .hero-content { flex-direction: column; text-align: center; }
             .hero-text { text-align: center; }
             .slider-box { width: 100%; max-width: 350px; height: 200px; margin-top: 20px; }
-            .menu-grid { grid-template-columns: 1fr; } /* Untereinander auf Handy */
+            .menu-grid { grid-template-columns: 1fr; } 
             .info-box { flex-direction: column; text-align: center; }
             .nav-links { gap: 8px; }
             nav a { font-size: 0.85rem; padding: 6px 12px; }
-        }
-
-        /* --- QUERFORMAT (Landscape) auf Handys --- */
-        @media (max-height: 500px) and (orientation: landscape) {
-            header { position: relative; padding: 5px 0; } /* Header scrollt mit, spart Platz */
-            .logo-container h1 { font-size: 1.8rem; display: inline-block; vertical-align: middle; margin-right: 10px; }
-            .circle-90 { width: 40px; height: 40px; font-size: 1.2rem; display: inline-flex; vertical-align: middle; }
-            .header-socials { display: inline-block; margin: 0 10px; }
-            nav { margin-top: 5px; }
-            .hero-container { padding: 30px 15px; }
-            .slider-box { display: none; } /* Slider ausblenden im Querformat für mehr Platz */
         }
     </style>
 </head>
