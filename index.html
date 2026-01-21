@@ -48,12 +48,10 @@
             border-radius: 50%; margin-top: 5px; 
             color: var(--white);
             font-size: 2.2rem; font-weight: 900;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* ÄNDERUNG: Cursor ist jetzt default, nicht mehr klickbar */
+            cursor: default;
             user-select: none;
         }
-
-        .circle-90:active { transform: scale(0.9); }
 
         nav { 
             margin-top: 20px; 
@@ -68,24 +66,23 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 25px; /* Abstand zwischen den Links vergrößert */
+            gap: 25px; 
             align-items: center;
         }
 
-        /* ÄNDERUNG: Buttons vergrößert */
         nav a {
             color: var(--logo-red); text-decoration: none;
             font-weight: 900; text-transform: uppercase; 
-            font-size: 1.05rem; /* Größere Schrift */
+            font-size: 1.05rem; 
             cursor: pointer;
-            padding: 5px 10px; /* Mehr Klickfläche */
+            padding: 5px 10px; 
             transition: transform 0.2s;
         }
         nav a:hover { transform: scale(1.05); }
 
         .tombola-link {
             border: 2px solid var(--logo-red);
-            padding: 8px 20px !important; /* Vergrößert */
+            padding: 8px 20px !important; 
             border-radius: 25px;
             background: rgba(255,255,255,0.3);
             transition: all 0.3s ease;
@@ -95,15 +92,14 @@
             color: var(--white) !important;
         }
         
-        /* ÄNDERUNG: Bestellen Button deutlich größer */
         .btn-highlight {
             background-color: var(--logo-red); color: var(--white) !important;
-            padding: 12px 35px !important; /* Vergrößert */
+            padding: 12px 35px !important; 
             border-radius: 8px;
             display: inline-flex;
             align-items: center;
             gap: 10px; 
-            font-size: 1.2rem !important; /* Größere Schrift */
+            font-size: 1.2rem !important;
             margin-top: 5px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
@@ -175,25 +171,6 @@
             background: var(--logo-red);
             color: white;
         }
-
-        /* --- ALTES "JOKE" OVERLAY --- */
-        #win-overlay {
-            display: none;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-        .win-content {
-            background: var(--bg-vanilla-creme);
-            border: 10px solid var(--logo-red);
-            padding: 40px; border-radius: 20px;
-            text-align: center; max-width: 80%;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
-        .win-content h2 { color: var(--logo-red); font-size: 2.5rem; margin: 0; }
-        .win-content p { font-size: 1.5rem; font-weight: bold; margin-top: 10px; }
 
         /* --- HERO & REST --- */
         .hero-container {
@@ -267,14 +244,6 @@
 </head>
 <body id="top">
 
-    <div id="win-overlay" onclick="closeWin()">
-        <div class="win-content">
-            <h2>🎉 GEWONNEN! 🎉</h2>
-            <p>2 JAHRE PIZZA FREI!</p>
-            <p style="font-size: 0.9rem; opacity: 0.7;">(Nur ein Spaß!)</p>
-        </div>
-    </div>
-
     <div id="game-overlay" class="modal-overlay">
         <div class="modal-window game-window">
             <span class="close-modal" onclick="closeGame()">&times;</span>
@@ -303,7 +272,7 @@
     <header>
         <div class="logo-container">
             <h1>LA TOMBOLA</h1>
-            <div id="number-circle" class="circle-90" onclick="showWin()">90</div>
+            <div id="number-circle" class="circle-90">90</div>
         </div>
         <nav>
             <div class="nav-links">
@@ -389,20 +358,7 @@
         }
 
         function closeOrderOverlay(event) {
-            // Wenn event übergeben wird (Klick auf Hintergrund), schließen. 
-            // Oder wenn kein Event (Klick auf X), auch schließen.
             document.getElementById('order-overlay').style.display = 'none';
-        }
-
-        /* --- ALTES SKRIPT (Für die 90 Animation & Angebote) --- */
-        function showWin() {
-            const overlay = document.getElementById('win-overlay');
-            overlay.style.display = 'flex';
-            setTimeout(() => { closeWin(); }, 3000);
-        }
-
-        function closeWin() {
-            document.getElementById('win-overlay').style.display = 'none';
         }
 
         async function fetchSheetData() {
@@ -428,6 +384,7 @@
 
         function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
 
+        // Animation für die 90 läuft weiter, aber ist nicht mehr klickbar
         const circle = document.getElementById('number-circle');
         function tombola() {
             const inter = setInterval(() => { circle.innerText = Math.floor(Math.random()*91); }, 70);
