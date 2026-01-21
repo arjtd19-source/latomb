@@ -15,6 +15,7 @@
         }
 
         html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Georgia', serif;
@@ -28,7 +29,7 @@
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
-            padding: 15px 0; 
+            padding: 10px 0; 
             text-align: center;
             position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
@@ -36,28 +37,38 @@
 
         .logo-container h1 {
             color: var(--logo-red); margin: 0;
-            font-size: 3.5rem; text-transform: uppercase;
-            letter-spacing: 4px; font-weight: 900; line-height: 1;
+            font-size: 3rem; text-transform: uppercase;
+            letter-spacing: 2px; font-weight: 900; line-height: 1;
         }
 
         .circle-90 {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 70px; height: 70px; 
+            width: 60px; height: 60px; 
             border: 4px solid var(--logo-red);
             background-color: var(--logo-red);
             border-radius: 50%; margin-top: 5px; 
             color: var(--white);
-            font-size: 2.2rem; font-weight: 900;
+            font-size: 2rem; font-weight: 900;
             cursor: default;
             user-select: none;
         }
 
+        .header-socials { margin-top: 5px; margin-bottom: 5px; }
+        .header-socials a {
+            color: var(--logo-red);
+            font-size: 1.4rem;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
         nav { 
-            margin-top: 20px; 
+            margin-top: 10px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            gap: 15px; 
+            gap: 10px; 
             padding: 0 10px;
         }
 
@@ -65,23 +76,23 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 15px; 
+            gap: 10px; 
             align-items: center;
         }
 
-        /* --- BUTTON DESIGN --- */
         nav a {
             color: var(--logo-red); 
             text-decoration: none;
             font-weight: 900; 
             text-transform: uppercase; 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             cursor: pointer;
             border: 2px solid var(--logo-red); 
-            padding: 8px 20px; 
+            padding: 6px 15px; 
             border-radius: 25px; 
             background: rgba(255,255,255,0.3);
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
         nav a:hover, nav a.active { 
             background: var(--logo-red);
@@ -92,12 +103,12 @@
         .btn-highlight {
             background-color: var(--logo-red) !important; 
             color: var(--white) !important;
-            padding: 12px 35px !important; 
+            padding: 10px 25px !important; 
             border-radius: 8px !important;
             display: inline-flex;
             align-items: center;
             gap: 10px; 
-            font-size: 1.2rem !important;
+            font-size: 1.1rem !important;
             margin-top: 5px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
@@ -109,13 +120,14 @@
             background: rgba(0,0,0,0.85);
             z-index: 3000; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
+            padding: 20px;
         }
 
         .modal-window {
             background: var(--white);
             border: 4px solid var(--logo-red);
-            padding: 30px; border-radius: 15px;
-            text-align: center; width: 90%; max-width: 450px;
+            padding: 25px; border-radius: 15px;
+            text-align: center; width: 100%; max-width: 450px;
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
             position: relative;
             animation: slideDown 0.4s ease-out;
@@ -127,22 +139,23 @@
             font-size: 24px; color: var(--logo-red); cursor: pointer;
             font-weight: bold;
         }
-        
+
         .order-phone {
-            display: block; margin-top: 15px; font-size: 1.8rem; font-weight: bold;
+            display: block; margin-top: 15px; font-size: 1.5rem; font-weight: bold;
             color: var(--logo-red); text-decoration: none;
             border: 2px dashed var(--logo-red); padding: 10px; border-radius: 10px;
             transition: all 0.3s;
+            word-break: break-all;
         }
-        .order-phone:hover { background: var(--logo-red); color: white; }
 
-        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; min-height: 600px; }
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 15px; min-height: 600px; }
 
         .section-title {
             text-align: center; color: var(--logo-red);
             border-bottom: 3px solid var(--logo-red);
-            padding-bottom: 10px; text-transform: uppercase; letter-spacing: 3px;
-            margin-bottom: 30px;
+            padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
 
         /* --- SPEISEKARTE LAYOUT --- */
@@ -150,7 +163,7 @@
             background: var(--logo-red);
             color: white;
             padding: 10px;
-            margin-top: 50px;
+            margin-top: 40px;
             margin-bottom: 20px;
             text-transform: uppercase;
             font-weight: bold;
@@ -158,17 +171,17 @@
             justify-content: space-between;
             align-items: center;
             border-radius: 5px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         .size-labels {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: flex;
-            gap: 15px;
-            min-width: 140px;
+            gap: 10px;
+            min-width: 120px;
             justify-content: flex-end;
             font-weight: normal;
         }
-        .size-labels span { width: 65px; text-align: right; }
+        .size-labels span { width: 60px; text-align: right; }
 
         .menu-grid-list { display: flex; flex-direction: column; gap: 15px; }
         
@@ -178,20 +191,26 @@
             border-bottom: 1px dotted var(--logo-red);
             padding-bottom: 8px;
             align-items: flex-end;
+            flex-wrap: wrap; /* Wichtig für kleine Bildschirme */
         }
 
-        .item-details { flex: 1; padding-right: 15px; }
-        .item-name { font-weight: bold; font-size: 1.1rem; color: var(--logo-red); }
-        .item-desc { font-style: italic; font-size: 0.95rem; color: #333; }
-        .item-prices { display: flex; gap: 15px; min-width: 140px; justify-content: flex-end; font-weight: bold; color: var(--text-dark); }
-        .price-single { width: 65px; text-align: right; white-space: nowrap; }
+        .item-details { flex: 1; padding-right: 15px; min-width: 200px; }
+        .item-name { font-weight: bold; font-size: 1.05rem; color: var(--logo-red); }
+        .item-desc { font-style: italic; font-size: 0.9rem; color: #333; }
+        
+        .item-prices { 
+            display: flex; gap: 10px; min-width: 120px; 
+            justify-content: flex-end; font-weight: bold; color: var(--text-dark); 
+            margin-top: 5px;
+        }
+        .price-single { width: 60px; text-align: right; white-space: nowrap; }
 
         .allergen-tag { font-size: 0.7rem; vertical-align: top; color: #666; font-weight: normal; margin-left: 2px; }
 
         /* --- ALLERGEN LEGENDE --- */
         .allergen-legend {
-            margin-top: 60px;
-            padding: 25px;
+            margin-top: 50px;
+            padding: 20px;
             background: #e8e4dc;
             border-top: 4px solid var(--logo-red);
             font-size: 0.85rem;
@@ -199,26 +218,53 @@
         }
         .allergen-legend h4 { margin-top: 0; color: var(--logo-red); text-transform: uppercase; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 15px;}
         
-        /* Grid für Legende: Links Zahlen, Rechts Buchstaben */
-        .legend-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
+        .legend-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .legend-column ul { list-style: none; padding: 0; margin: 0; }
         .legend-column li { margin-bottom: 4px; }
         .legend-column strong { color: var(--logo-red); display: inline-block; width: 25px; }
 
-        #impressum { display: none; margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--logo-red); }
-        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 25px; color: var(--logo-red); font-weight: bold; }
+        /* --- IMPRESSUM --- */
+        #impressum { 
+            display: none; 
+            margin-top: 40px; 
+            padding: 20px; 
+            border-top: 4px solid var(--logo-red);
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 20px; color: var(--logo-red); font-weight: bold; font-size: 0.9rem; }
         footer a { color: inherit; text-decoration: none; cursor: pointer; }
 
+        /* --- MOBILE OPTIMIERUNG --- */
         @media (max-width: 850px) {
-            .logo-container h1 { font-size: 2.2rem; }
-            .menu-category-header .size-labels { display: none; }
-            .item-prices { flex-direction: column; gap: 2px; min-width: auto; font-size: 1rem; }
-            .price-single { width: auto; text-align: right; }
+            .logo-container h1 { font-size: 2rem; }
+            .circle-90 { width: 50px; height: 50px; font-size: 1.5rem; }
+            .menu-category-header .size-labels { display: none; } /* Größen Labels mobil weg */
+            .item-prices { 
+                flex-direction: row; /* Preise nebeneinander lassen wenn möglich */
+                margin-top: 8px; 
+                width: 100%; /* Volle Breite */
+                justify-content: space-between; /* Preise verteilen */
+            }
+            .item-prices .price-single { text-align: right; }
+            
+            /* Legende untereinander */
             .legend-container { grid-template-columns: 1fr; gap: 20px; }
+            
+            .nav-links { gap: 8px; }
+            nav a { font-size: 0.85rem; padding: 6px 12px; }
+        }
+
+        /* --- QUERFORMAT (Landscape) auf Handys --- */
+        @media (max-height: 500px) and (orientation: landscape) {
+            header { position: relative; padding: 5px 0; }
+            .logo-container h1 { font-size: 1.8rem; display: inline-block; vertical-align: middle; margin-right: 10px; }
+            .circle-90 { width: 40px; height: 40px; font-size: 1.2rem; display: inline-flex; vertical-align: middle; }
+            .header-socials { display: inline-block; margin: 0 10px; }
+            nav { margin-top: 5px; }
+            .container { margin-top: 15px; }
         }
     </style>
 </head>
@@ -252,6 +298,12 @@
             <h1>LA TOMBOLA</h1>
             <div id="number-circle" class="circle-90">90</div>
         </div>
+
+        <div class="header-socials">
+            <a href="https://www.facebook.com/p/Pizzeria-La-Tombola-100054366672322/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/pizzeria_la_tombola_90/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+
         <nav>
             <div class="nav-links">
                 <a href="index.html">Startseite / Aktuelle Angebote</a> 
@@ -316,9 +368,21 @@
 
         <section id="impressum">
             <h2 class="section-title">Impressum</h2>
-            <div style="text-align: center; background: rgba(255,255,255,0.5); padding: 20px; border-radius: 8px;">
-                <p><strong>Pizzeria LA TOMBOLA 90</strong><br>Brückstraße 49, 45239 Essen-Werden</p>
-                <p>Tel: 0201 40 87 00 37</p>
+            <div style="line-height: 1.8;">
+                <p><strong>Angaben gemäß § 5 TMG:</strong></p>
+                <p>
+                    <strong>Pizzeria LA TOMBOLA 90</strong><br>
+                    Inhaber / Verantwortlich:<br>
+                    <strong>Cristiano Cofano</strong><br>
+                    Bruststraße 4<br>
+                    45239 Essen
+                </p>
+                <hr style="width: 50px; border-color: var(--logo-red); margin: 20px auto;">
+                <p>
+                    <strong>Kontakt (Pizzeria):</strong><br>
+                    Brückstraße 49, 45239 Essen-Werden<br>
+                    Telefon: 0201 40 87 00 37
+                </p>
             </div>
         </section>
     </div>
@@ -329,7 +393,6 @@
     </footer>
 
     <script>
-        /* --- BESTELL BUTTON & MODALS --- */
         function handleOrderClick(event) {
             event.preventDefault();
             if (window.innerWidth > 850) {
@@ -347,9 +410,12 @@
             document.querySelectorAll('.modal-overlay').forEach(el => el.style.display = 'none');
         }
 
-        function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
+        function showImpressum() { 
+            const imp = document.getElementById('impressum');
+            imp.style.display = 'block'; 
+            imp.scrollIntoView({ behavior: 'smooth' });
+        }
 
-        /* --- 90er ANIMATION --- */
         const circle = document.getElementById('number-circle');
         let spinCount = 0;
         const maxSpins = 4; 
@@ -370,7 +436,7 @@
         }
         tombola();
 
-        /* --- SPEISEKARTE DATEN MIT ECHTEN ALLERGENEN VOM BILD --- */
+        /* --- SPEISEKARTE DATEN --- */
         const menuData = [
             {
                 category: "Pizza Classica",
