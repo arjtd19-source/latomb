@@ -25,15 +25,13 @@
             line-height: 1.6;
         }
 
-        /* --- HEADER (Standard: Sticky für Desktop) --- */
+        /* --- HEADER (Desktop: Sticky) --- */
         header {
             background-color: var(--bg-vanilla-creme);
             border-bottom: 4px solid var(--logo-red);
             padding: 10px 0; 
             text-align: center;
-            position: sticky; /* Desktop: Klebt oben fest */
-            top: 0; 
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
         }
 
@@ -232,9 +230,9 @@
 
         /* --- MOBILE OPTIMIERUNG --- */
         @media (max-width: 850px) {
-            /* WICHTIG: Header scrollt auf Mobile mit (nicht sticky) */
+            /* Header scrollt mit (nicht sticky) */
             header { position: relative; top: auto; }
-            
+
             .logo-container h1 { font-size: 2rem; }
             .circle-90 { width: 50px; height: 50px; font-size: 1.5rem; }
             .hero-content { flex-direction: column; text-align: center; }
@@ -285,7 +283,7 @@
 
         <nav>
             <div class="nav-links">
-                <a href="index.html" class="active">Startseite / Aktuelle Angebote</a> 
+                <a href="index.html" class="active">Home / AKTUELLE ANGEBOTE</a> 
                 <a href="#" onclick="openComingSoon()">Tombola</a>
                 <a href="speisekarte.html">Speisekarte</a>
                 <a href="galerie.html">Galerie</a>
