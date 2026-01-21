@@ -254,14 +254,14 @@
         <div class="modal-window game-window">
             <span class="close-modal" onclick="closeGame()">&times;</span>
             <h2>🍕 Tombola 🍕</h2>
-            <p>Trage deine E-Mail ein und wähle eine Glückszahl (0-90).<br>Jeder neue Teilnehmer gewinnt!</p>
+            <p>Trage deine E-Mail ein und wähle eine Glückszahl (0-90).</p>
             
             <input type="email" id="gameEmail" placeholder="Deine E-Mail Adresse" required>
             <input type="number" id="gameInput" min="0" max="90" placeholder="?">
             <button id="gameBtn" class="game-btn" onclick="runTombolaGame()">Jetzt Spielen</button>
             
             <div id="gameResult" class="game-result"></div>
-            <div class="game-info" id="gameStatus">Nur 1x pro E-Mail-Adresse. 100% Gewinnchance.</div>
+            <div class="game-info" id="gameStatus">Nur 1x pro E-Mail-Adresse.</div>
         </div>
     </div>
 
@@ -407,7 +407,7 @@
             }, 3500);
         }
 
-        /* --- NEUE TOMBOLA SPIEL LOGIK (NUR E-MAIL SENDEN) --- */
+        /* --- LOGIK: NUR E-MAIL SENDEN --- */
         function openGame() {
             document.getElementById('game-overlay').style.display = 'flex';
             document.getElementById('gameResult').innerHTML = "";
@@ -449,11 +449,11 @@
             btn.disabled = true;
             resultDiv.innerHTML = "Die Trommel dreht sich... 🎲";
             
-            // Speichern UND Senden (passiert jetzt über Google Script)
+            // Speichern UND Senden via Google Script
             saveEmailToDatabase(email);
 
             setTimeout(() => {
-                // Keine Anzeige des Codes mehr, nur Bestätigung
+                // Bestätigung (Code wird nicht angezeigt, sondern gemailt)
                 resultDiv.innerHTML = `
                     <div class="win-code-box">
                         🎉 GLÜCKWUNSCH! <br>
@@ -467,14 +467,14 @@
         }
 
         function saveEmailToDatabase(email) {
-            // URL aus deinem vorigen Chat (bleibt gleich, wenn du 'Version verwalten' updatest)
+            // URL zum Google Script
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwCCzxu19LepVlQE2MJa8ZMO-eVgFVPyCE5t7XdLcM65Ua0qGqgSjmM34grOpgXuGMm/exec';
             const formData = new FormData();
             formData.append('email', email);
 
             // Senden
             fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-                .then(() => console.log('Anfrage an Google Script gesendet (Speichern + Mail).'))
+                .then(() => console.log('Anfrage an Google Script gesendet.'))
                 .catch(error => console.error('Fehler beim Senden:', error));
         }
     </script>
