@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speisekarte | Pizzeria LA TOMBOLA 90</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
@@ -18,7 +23,8 @@
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Georgia', serif;
+            /* HIER WURDE DIE SCHRIFTART GEÄNDERT */
+            font-family: 'Open Sans', sans-serif;
             margin: 0; padding: 0;
             background-color: var(--bg-nougat);
             color: var(--text-dark);
@@ -38,7 +44,7 @@
         .logo-container h1 {
             color: var(--logo-red); margin: 0;
             font-size: 3rem; text-transform: uppercase;
-            letter-spacing: 2px; font-weight: 900; line-height: 1;
+            letter-spacing: 2px; font-weight: 800; line-height: 1; /* font-weight angepasst für Open Sans */
         }
 
         .circle-90 {
@@ -48,7 +54,7 @@
             background-color: var(--logo-red);
             border-radius: 50%; margin-top: 5px; 
             color: var(--white);
-            font-size: 2rem; font-weight: 900;
+            font-size: 2rem; font-weight: 800;
             cursor: default;
             user-select: none;
         }
@@ -83,7 +89,7 @@
         nav a {
             color: var(--logo-red); 
             text-decoration: none;
-            font-weight: 900; 
+            font-weight: 700; 
             text-transform: uppercase; 
             font-size: 0.95rem; 
             cursor: pointer;
@@ -156,6 +162,7 @@
             padding-bottom: 10px; text-transform: uppercase; letter-spacing: 2px;
             margin-bottom: 20px;
             font-size: 1.5rem;
+            font-weight: 700;
         }
 
         /* --- SPEISEKARTE LAYOUT --- */
@@ -166,7 +173,7 @@
             margin-top: 40px;
             margin-bottom: 20px;
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: 700;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -179,7 +186,7 @@
             gap: 10px;
             min-width: 120px;
             justify-content: flex-end;
-            font-weight: normal;
+            font-weight: 400;
         }
         .size-labels span { width: 60px; text-align: right; }
 
@@ -195,17 +202,17 @@
         }
 
         .item-details { flex: 1; padding-right: 15px; min-width: 200px; }
-        .item-name { font-weight: bold; font-size: 1.05rem; color: var(--logo-red); }
+        .item-name { font-weight: 700; font-size: 1.05rem; color: var(--logo-red); }
         .item-desc { font-style: italic; font-size: 0.9rem; color: #333; }
         
         .item-prices { 
             display: flex; gap: 10px; min-width: 120px; 
-            justify-content: flex-end; font-weight: bold; color: var(--text-dark); 
+            justify-content: flex-end; font-weight: 700; color: var(--text-dark); 
             margin-top: 5px;
         }
         .price-single { width: 60px; text-align: right; white-space: nowrap; }
 
-        .allergen-tag { font-size: 0.7rem; vertical-align: top; color: #666; font-weight: normal; margin-left: 2px; }
+        .allergen-tag { font-size: 0.7rem; vertical-align: top; color: #666; font-weight: 400; margin-left: 2px; }
 
         /* --- ALLERGEN LEGENDE --- */
         .allergen-legend {
@@ -234,7 +241,7 @@
             text-align: center;
         }
 
-        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 20px; color: var(--logo-red); font-weight: bold; font-size: 0.9rem; }
+        footer { background-color: var(--bg-vanilla-creme); text-align: center; padding: 20px; color: var(--logo-red); font-weight: 700; font-size: 0.9rem; }
         footer a { color: inherit; text-decoration: none; cursor: pointer; }
 
         /* --- MOBILE OPTIMIERUNG --- */
