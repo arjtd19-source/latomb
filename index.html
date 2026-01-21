@@ -48,7 +48,6 @@
             border-radius: 50%; margin-top: 5px; 
             color: var(--white);
             font-size: 2.2rem; font-weight: 900;
-            /* ÄNDERUNG: Cursor ist jetzt default, nicht mehr klickbar */
             cursor: default;
             user-select: none;
         }
@@ -104,7 +103,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* --- MODALS (SPIEL & BESTELLEN) --- */
+        /* --- MODALS --- */
         .modal-overlay {
             display: none; 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -133,12 +132,25 @@
         
         .modal-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; }
         
-        /* Spezifisch für das Spiel */
+        /* TOMBOLA STYLES */
         .game-window input[type="number"] {
             padding: 10px; font-size: 22px; width: 80px; text-align: center;
             border: 2px solid var(--bg-nougat); border-radius: 8px; margin: 15px 0;
             font-family: 'Georgia', serif; color: var(--logo-red); font-weight: bold;
         }
+        
+        .game-window input[type="email"] {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 12px;
+            border: 2px solid var(--logo-red);
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            text-align: center;
+        }
+
         .game-btn {
             background-color: var(--logo-red); color: white; border: none;
             padding: 12px 30px; font-size: 18px; cursor: pointer;
@@ -149,28 +161,22 @@
         
         .win-code-box {
             background: #e8f5e9; border: 2px dashed #2e7d32;
-            padding: 10px; margin-top: 15px; color: #1b5e20; font-weight: bold;
+            padding: 15px; margin-top: 15px; color: #1b5e20; font-weight: bold;
+            animation: popIn 0.5s ease;
         }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+
         .game-result { margin-top: 15px; min-height: 40px; font-weight: bold; }
         .game-info { font-size: 0.8rem; color: #777; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px;}
 
-        /* Spezifisch für das Bestellfenster */
+        /* BESTELLEN STYLES */
         .order-phone {
-            display: block;
-            margin-top: 15px;
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--logo-red);
-            text-decoration: none;
-            border: 2px dashed var(--logo-red);
-            padding: 10px;
-            border-radius: 10px;
+            display: block; margin-top: 15px; font-size: 2rem; font-weight: bold;
+            color: var(--logo-red); text-decoration: none;
+            border: 2px dashed var(--logo-red); padding: 10px; border-radius: 10px;
             transition: all 0.3s;
         }
-        .order-phone:hover {
-            background: var(--logo-red);
-            color: white;
-        }
+        .order-phone:hover { background: var(--logo-red); color: white; }
 
         /* --- HERO & REST --- */
         .hero-container {
@@ -248,13 +254,15 @@
         <div class="modal-window game-window">
             <span class="close-modal" onclick="closeGame()">&times;</span>
             <h2>🍕 Tombola 🍕</h2>
-            <p>Wähle eine Zahl zwischen 0 und 90.<br>Wenn wir dieselbe ziehen, gewinnst du!</p>
+            <p>Trage deine E-Mail ein und wähle eine Glückszahl (0-90).<br>Jeder neue Teilnehmer gewinnt!</p>
+            
+            <input type="email" id="gameEmail" placeholder="Deine E-Mail Adresse" required>
             
             <input type="number" id="gameInput" min="0" max="90" placeholder="?">
-            <button id="gameBtn" class="game-btn" onclick="runTombolaGame()">Zahl ziehen</button>
+            <button id="gameBtn" class="game-btn" onclick="runTombolaGame()">Jetzt Spielen</button>
             
             <div id="gameResult" class="game-result"></div>
-            <div class="game-info" id="gameStatus">Täglich 1 Versuch möglich.</div>
+            <div class="game-info" id="gameStatus">Nur 1x pro E-Mail-Adresse. 100% Gewinnchance.</div>
         </div>
     </div>
 
@@ -348,11 +356,9 @@
         /* --- BESTELL BUTTON LOGIK --- */
         function handleOrderClick(event) {
             event.preventDefault();
-            // Wenn Breite größer als 850px (typischerweise PC/Tablet Landscape)
             if (window.innerWidth > 850) {
                 document.getElementById('order-overlay').style.display = 'flex';
             } else {
-                // Auf dem Handy direkt anrufen
                 window.location.href = "tel:020140870";
             }
         }
@@ -361,6 +367,7 @@
             document.getElementById('order-overlay').style.display = 'none';
         }
 
+        /* --- TAGESANGEBOTE & ANIMATION --- */
         async function fetchSheetData() {
             const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4iarO4GDUatu19QSFTPOOty6Xkl9QjWDP-MINEMEXH4ZxmZZFTujUxOSxPOsNk2Fd1iKtfmRsF1F-/pub?gid=0&single=true&output=csv';
             const container = document.getElementById('tagesangebote-container');
@@ -384,7 +391,6 @@
 
         function showImpressum() { document.getElementById('impressum').style.display = 'block'; }
 
-        // Animation für die 90 läuft weiter, aber ist nicht mehr klickbar
         const circle = document.getElementById('number-circle');
         function tombola() {
             const inter = setInterval(() => { circle.innerText = Math.floor(Math.random()*91); }, 70);
@@ -402,74 +408,78 @@
             }, 3500);
         }
 
-        /* --- TOMBOLA SPIEL SKRIPT --- */
+        /* --- TOMBOLA SPIEL LOGIK MIT E-MAIL UPLOAD --- */
         function openGame() {
             document.getElementById('game-overlay').style.display = 'flex';
-            checkDailyStatus();
+            document.getElementById('gameResult').innerHTML = "";
+            document.getElementById('gameBtn').disabled = false;
         }
 
         function closeGame() {
             document.getElementById('game-overlay').style.display = 'none';
         }
 
-        function checkDailyStatus() {
-            const lastPlayed = localStorage.getItem('pizzaLastPlayed');
-            const today = new Date().toDateString();
-            const btn = document.getElementById('gameBtn');
-            const input = document.getElementById('gameInput');
-            const status = document.getElementById('gameStatus');
-
-            if (lastPlayed === today) {
-                btn.disabled = true;
-                btn.innerHTML = "Morgen wieder!";
-                input.disabled = true;
-                status.innerText = "Du hast dein Glück heute schon versucht! 🍀";
-            } else {
-                btn.disabled = false;
-                btn.innerHTML = "Zahl ziehen";
-                input.disabled = false;
-                status.innerText = "Viel Glück!";
-                document.getElementById('gameResult').innerHTML = "";
-            }
+        function isValidEmail(email) {
+            return /\S+@\S+\.\S+/.test(email);
         }
 
         function runTombolaGame() {
-            const input = document.getElementById('gameInput').value;
+            const emailInput = document.getElementById('gameEmail');
+            const numberInput = document.getElementById('gameInput');
             const resultDiv = document.getElementById('gameResult');
             const btn = document.getElementById('gameBtn');
 
-            if (input === "" || input < 0 || input > 90) {
+            const email = emailInput.value.trim().toLowerCase();
+            const number = numberInput.value;
+
+            if (!isValidEmail(email)) {
+                resultDiv.innerHTML = "<span style='color:red'>Bitte eine gültige E-Mail eingeben!</span>";
+                return;
+            }
+            if (number === "" || number < 0 || number > 90) {
                 resultDiv.innerHTML = "<span style='color:red'>Bitte Zahl 0-90 wählen!</span>";
                 return;
             }
 
+            // Prüfung: Hat diese Email lokal schon gespielt?
+            if (localStorage.getItem('played_' + email)) {
+                resultDiv.innerHTML = "<span style='color:red'>Diese E-Mail hat bereits teilgenommen!</span>";
+                return;
+            }
+
+            // Spielstart
             btn.disabled = true;
             resultDiv.innerHTML = "Die Trommel dreht sich... 🎲";
+            
+            // DATENBANK SPEICHERN
+            saveEmailToDatabase(email);
 
             setTimeout(() => {
-                const winningNumber = Math.floor(Math.random() * 91);
+                // Kunde gewinnt immer
+                const winCode = "WILLKOMMEN-10-" + Math.floor(1000 + Math.random() * 9000);
                 
-                if (parseInt(input) === winningNumber) {
-                    const winCode = generateWinCode();
-                    resultDiv.innerHTML = `
-                        <div class="win-code-box">
-                            🎉 TREFFER! Code: ${winCode}
-                        </div>`;
-                } else {
-                    resultDiv.innerHTML = `<span style="color:red">Schade! Gezogen wurde: ${winningNumber}.</span>`;
-                }
+                resultDiv.innerHTML = `
+                    <div class="win-code-box">
+                        🎉 GLÜCKWUNSCH! <br>
+                        Wir schenken dir 10% auf deine erste Bestellung!<br>
+                        Dein Code: <strong>${winCode}</strong>
+                    </div>
+                    <p style="font-size:0.8rem; margin-top:5px;">Code dem Kellner nennen.</p>`;
 
-                localStorage.setItem('pizzaLastPlayed', new Date().toDateString());
-                document.getElementById('gameStatus').innerText = "Komm morgen wieder vorbei!";
-                
+                localStorage.setItem('played_' + email, 'true');
             }, 1500);
         }
 
-        function generateWinCode() {
-            const now = new Date();
-            const datePart = String(now.getDate()).padStart(2, '0') + String(now.getMonth()+1).padStart(2, '0');
-            const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
-            return `PIZZA-${datePart}-${randomPart}`;
+        // --- HIER IST DER EINGEFÜGTE LINK ---
+        function saveEmailToDatabase(email) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwCCzxu19LepVlQE2MJa8ZMO-eVgFVPyCE5t7XdLcM65Ua0qGqgSjmM34grOpgXuGMm/exec';
+            const formData = new FormData();
+            formData.append('email', email);
+
+            // Senden (no-cors verhindert Fehler bei externen Requests)
+            fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+                .then(() => console.log('E-Mail gesendet.'))
+                .catch(error => console.error('Fehler beim Senden:', error));
         }
     </script>
 </body>
