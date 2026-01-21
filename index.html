@@ -8,9 +8,9 @@
     <style>
         :root {
             --logo-red: #631a1e;        
-            --bg-nougat: #bdaf95;      
+            --bg-nougat: #bdaf95;       
             --bg-vanilla-creme: #d6cbb0; 
-            --text-dark: #1a1a1a;     
+            --text-dark: #1a1a1a;       
             --white: #ffffff;
         }
 
@@ -40,14 +40,13 @@
             letter-spacing: 4px; font-weight: 900; line-height: 1;
         }
 
-        /* ÄNDERUNG HIER: Hintergrund rot, Schrift weiß */
         .circle-90 {
             display: inline-flex; align-items: center; justify-content: center;
             width: 70px; height: 70px; 
             border: 4px solid var(--logo-red);
-            background-color: var(--logo-red); /* Hintergrund rot */
+            background-color: var(--logo-red);
             border-radius: 50%; margin-top: 5px; 
-            color: var(--white); /* Schrift weiß */
+            color: var(--white);
             font-size: 2.2rem; font-weight: 900;
             cursor: pointer;
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -57,7 +56,7 @@
         .circle-90:active { transform: scale(0.9); }
 
         nav { 
-            margin-top: 15px; 
+            margin-top: 20px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -69,21 +68,25 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px; /* Abstand zwischen den Links vergrößert */
             align-items: center;
         }
 
+        /* ÄNDERUNG: Buttons vergrößert */
         nav a {
             color: var(--logo-red); text-decoration: none;
-            font-weight: 900; text-transform: uppercase; font-size: 0.85rem;
+            font-weight: 900; text-transform: uppercase; 
+            font-size: 1.05rem; /* Größere Schrift */
             cursor: pointer;
+            padding: 5px 10px; /* Mehr Klickfläche */
+            transition: transform 0.2s;
         }
+        nav a:hover { transform: scale(1.05); }
 
-        /* Der neue Tombola Button Style */
         .tombola-link {
             border: 2px solid var(--logo-red);
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 20px !important; /* Vergrößert */
+            border-radius: 25px;
             background: rgba(255,255,255,0.3);
             transition: all 0.3s ease;
         }
@@ -92,24 +95,29 @@
             color: var(--white) !important;
         }
         
+        /* ÄNDERUNG: Bestellen Button deutlich größer */
         .btn-highlight {
             background-color: var(--logo-red); color: var(--white) !important;
-            padding: 10px 25px !important; border-radius: 5px;
+            padding: 12px 35px !important; /* Vergrößert */
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
-            gap: 8px; 
+            gap: 10px; 
+            font-size: 1.2rem !important; /* Größere Schrift */
+            margin-top: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* --- TOMBOLA SPIEL MODAL --- */
-        #game-overlay {
-            display: none; /* Versteckt */
+        /* --- MODALS (SPIEL & BESTELLEN) --- */
+        .modal-overlay {
+            display: none; 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85);
             z-index: 3000; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
         }
 
-        .game-window {
+        .modal-window {
             background: var(--white);
             border: 4px solid var(--logo-red);
             padding: 30px; border-radius: 15px;
@@ -121,13 +129,15 @@
 
         @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .close-game {
+        .close-modal {
             position: absolute; top: 10px; right: 15px;
             font-size: 24px; color: var(--logo-red); cursor: pointer;
             font-weight: bold;
         }
         
-        .game-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; }
+        .modal-window h2 { color: var(--logo-red); margin-top: 0; text-transform: uppercase; }
+        
+        /* Spezifisch für das Spiel */
         .game-window input[type="number"] {
             padding: 10px; font-size: 22px; width: 80px; text-align: center;
             border: 2px solid var(--bg-nougat); border-radius: 8px; margin: 15px 0;
@@ -148,7 +158,25 @@
         .game-result { margin-top: 15px; min-height: 40px; font-weight: bold; }
         .game-info { font-size: 0.8rem; color: #777; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px;}
 
-        /* --- ALTES "JOKE" OVERLAY (BEHALTEN) --- */
+        /* Spezifisch für das Bestellfenster */
+        .order-phone {
+            display: block;
+            margin-top: 15px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--logo-red);
+            text-decoration: none;
+            border: 2px dashed var(--logo-red);
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .order-phone:hover {
+            background: var(--logo-red);
+            color: white;
+        }
+
+        /* --- ALTES "JOKE" OVERLAY --- */
         #win-overlay {
             display: none;
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -247,9 +275,9 @@
         </div>
     </div>
 
-    <div id="game-overlay">
-        <div class="game-window">
-            <span class="close-game" onclick="closeGame()">&times;</span>
+    <div id="game-overlay" class="modal-overlay">
+        <div class="modal-window game-window">
+            <span class="close-modal" onclick="closeGame()">&times;</span>
             <h2>🍕 Tombola 🍕</h2>
             <p>Wähle eine Zahl zwischen 0 und 90.<br>Wenn wir dieselbe ziehen, gewinnst du!</p>
             
@@ -261,6 +289,17 @@
         </div>
     </div>
 
+    <div id="order-overlay" class="modal-overlay" onclick="closeOrderOverlay(event)">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeOrderOverlay()">&times;</span>
+            <h2><i class="fas fa-phone-alt"></i> Bestellung</h2>
+            <p style="font-size: 1.2rem; margin-top: 20px;">
+                Gerne nehmen wir Ihre Bestellung telefonisch entgegen:
+            </p>
+            <a href="tel:020140870" class="order-phone">0201 40870</a>
+        </div>
+    </div>
+
     <header>
         <div class="logo-container">
             <h1>LA TOMBOLA</h1>
@@ -268,14 +307,13 @@
         </div>
         <nav>
             <div class="nav-links">
-                <a href="index.html">Home</a>
                 <a href="#" onclick="openGame()" class="tombola-link"><i class="fas fa-dice"></i> TOMBOLA</a>
                 <a href="tagesangebote.html">Tagesangebote</a>
                 <a href="speisekarte.html">Speisekarte</a>
                 <a href="galerie.html">Galerie</a>
                 <a href="#kontakt">Kontakt</a>
             </div>
-            <a href="tel:020140870" class="btn-highlight"><i class="fas fa-phone"></i> BESTELLEN</a>
+            <a href="#" onclick="handleOrderClick(event)" class="btn-highlight"><i class="fas fa-phone"></i> BESTELLEN</a>
         </nav>
     </header>
 
@@ -338,6 +376,24 @@
     </footer>
 
     <script>
+        /* --- BESTELL BUTTON LOGIK --- */
+        function handleOrderClick(event) {
+            event.preventDefault();
+            // Wenn Breite größer als 850px (typischerweise PC/Tablet Landscape)
+            if (window.innerWidth > 850) {
+                document.getElementById('order-overlay').style.display = 'flex';
+            } else {
+                // Auf dem Handy direkt anrufen
+                window.location.href = "tel:020140870";
+            }
+        }
+
+        function closeOrderOverlay(event) {
+            // Wenn event übergeben wird (Klick auf Hintergrund), schließen. 
+            // Oder wenn kein Event (Klick auf X), auch schließen.
+            document.getElementById('order-overlay').style.display = 'none';
+        }
+
         /* --- ALTES SKRIPT (Für die 90 Animation & Angebote) --- */
         function showWin() {
             const overlay = document.getElementById('win-overlay');
@@ -389,7 +445,7 @@
             }, 3500);
         }
 
-        /* --- NEUES SKRIPT (Für das echte Tombola Spiel) --- */
+        /* --- TOMBOLA SPIEL SKRIPT --- */
         function openGame() {
             document.getElementById('game-overlay').style.display = 'flex';
             checkDailyStatus();
@@ -434,22 +490,18 @@
             resultDiv.innerHTML = "Die Trommel dreht sich... 🎲";
 
             setTimeout(() => {
-                // Hier kannst du zum Testen gewinnen: const winningNumber = parseInt(input);
                 const winningNumber = Math.floor(Math.random() * 91);
                 
                 if (parseInt(input) === winningNumber) {
-                    // GEWONNEN
                     const winCode = generateWinCode();
                     resultDiv.innerHTML = `
                         <div class="win-code-box">
                             🎉 TREFFER! Code: ${winCode}
                         </div>`;
                 } else {
-                    // VERLOREN
                     resultDiv.innerHTML = `<span style="color:red">Schade! Gezogen wurde: ${winningNumber}.</span>`;
                 }
 
-                // Tagessperre setzen
                 localStorage.setItem('pizzaLastPlayed', new Date().toDateString());
                 document.getElementById('gameStatus').innerText = "Komm morgen wieder vorbei!";
                 
